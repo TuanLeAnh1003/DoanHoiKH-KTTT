@@ -1,0 +1,213 @@
+/* Header */
+.AccManage__header {
+    display: flex;
+    border-bottom: 1px solid #E9ECEF;
+    padding: 23px 48px 20px;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #ccc; */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.AccManage__header-heading {
+    font-size: 24px;
+    color: #252525;
+}
+
+.AccManage__header-edit {
+    /* padding: 8px 12px; */
+    width: 105px;
+    height: 34px;
+    background-color: #88D6A3;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.AccManage__header-edit:hover {
+    cursor: pointer;
+}
+
+/* Container */
+.AccManage__container {
+    padding: 32px 77px 79px 48px;
+    /* background-color: #ccc; */
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+.AccManage__container-form {
+
+}
+
+.AccManage__container-form-row {
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 100px;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.AccManage__container-form:last-child {
+    margin-bottom: 0;
+}
+
+.AccManage__container-form-user-label
+{
+    font-size: 16px;
+    min-width: 120px;
+    text-align: left;
+    font-weight: 300;
+    color: #000;
+}
+
+.AccManage__container-form-input {
+    width: 300px;
+    padding: 6px 16px;
+    margin-right: auto;
+    outline: none;
+    border-radius: 12px;
+    border: 1px solid #807F8A;
+}
+
+.AccManage__container-form-edit {
+
+}
+
+.AccManage__container-form-edit-icon {
+    font-size: 20px;
+    color: #807F8A;
+}
+
+.AccManage__container-form-edit-icon:hover {
+    cursor: pointer;
+}
+
+/* Form Change User, Passwd, Email */
+.AccManage__form-change {
+    padding: 31px 30px 0;
+    min-height: 320px;
+    background-color: #E6F3F8;
+    border-radius: 8px; 
+    margin-bottom: 25px;
+    animation: fadeIn 0.3s ease-in;
+    will-change: all;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.AccManage__form-change-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.AccManage__form-change-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: #14546B;
+}
+
+.AccManage__form-change-close {
+
+}
+
+.AccManage__form-change-close:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.AccManage__form-change-close-icon {
+    font-size: 24px;
+    color: #807F8A;
+}
+
+.AccManage__form-change-section {
+    margin: 28px 0 0 40px;
+}
+
+.AccManage__form-change-section-row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 27px;
+}
+
+.AccManage__form-change-section-row:last-child {
+    margin-bottom: 23px;
+}
+
+.AccManage__form-change-section-row::before {
+    content: "";
+    display: block;
+    position: absolute;
+    border-left: 1px solid #27A8D6;
+    height: 60px;
+    /* top: 0; */
+    bottom: 0;
+    left: -26px;
+}
+
+.AccManage__form-change-section-row:first-child::before {
+    top: -2px;
+}
+
+/* .AccManage__password-form-change-section::before {
+    content: "";
+    display:   position: absolute;
+    border-left: 1px solid #000;
+    height: 150px; 
+    left: 150px;
+
+} */
+
+.AccManage__pasm-change-section-row-label {
+    font-size: 16px;
+    font-weight: 300;
+    color: #000;
+}
+
+.AccManage__form-change-section-row-input {
+    width: 300px;
+    padding: 3px 16px;
+    border: 1px solid #807F8A;
+    outline: none;
+    border-radius: 12px;
+}
+
+.AccManage__form-change-section-function {
+    display: flex;
+    justify-content: flex-end;
+    padding-bottom: 4px;
+}
+
+.AccManage__form-change-section-btn {
+    min-width: 60px;
+    padding: 6px 16px;
+    background-color: #c3c3c6;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    margin-left: 18px;
+}
+
+.AccManage__form-change-section-btn:hover {
+    opacity: 0.9;
+}
+
+.AccManage__form-change-section--color {
+    background-color: #88D6A3;
+}
