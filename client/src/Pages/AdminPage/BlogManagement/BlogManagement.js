@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import BlogPopup from '../../../Components/BlogPopup/BlogPopup'
 import './BlogManagement.css'
 
 function BlogManagement() {
+  const [type, setType] = useState('update')
+
   return (
-    <div>BlogManagement</div>
+    <div className="b-mng">
+      <p>
+        BlogManagement
+      </p>
+      <BlogPopup type={type} />
+    </div>
   )
 }
 

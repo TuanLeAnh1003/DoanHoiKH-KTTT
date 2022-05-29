@@ -14,7 +14,7 @@ function HomePage() {
   return (
     <div>
       <Header />
-      <div style={{minHeight: '365px'}}>
+      <div style={{minHeight: '320px'}}>
         <Routes>
           <Route path="/" element={<Home />} exactly/>
           <Route path="/activities" element={<Activities />}/>
