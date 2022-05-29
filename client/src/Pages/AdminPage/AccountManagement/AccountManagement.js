@@ -12,7 +12,7 @@ function AccountManagement() {
     <>
       <div className="AccManage__header">
         <div className='AccManage__header-heading'>Tài khoản</div>
-        <div className='AccManage__header-edit'>Chỉnh sửa</div>
+        <div className='AccManage__header-edit' onClick={() => {setShowUserName(true); setShowPassword(true); setShowEmail(true) }} >Chỉnh sửa</div>
       </div>
       <div className='AccManage__container'>
         <div className="AccManage__container-form">
