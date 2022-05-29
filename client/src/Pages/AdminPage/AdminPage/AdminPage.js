@@ -6,6 +6,7 @@ import AccountManagement from '../AccountManagement/AccountManagement';
 import BlogManagement from '../BlogManagement/BlogManagement';
 import NotFound from '../../HomePage/NotFound/NotFound';
 import { Container, Row, Col } from 'react-bootstrap'
+import AdminSidebar from '../../../Components/AdminSidebar/AdminSidebar';
 
 function AdminPage() {
   return (
@@ -13,7 +14,9 @@ function AdminPage() {
       <Header />
       <Container>
         <Row>
-          <Col sm={3}>Để tui làm bên này</Col>
+          <Col sm={3}>
+            <AdminSidebar />
+          </Col>
           <Col sm={9}>
             <Routes>
               <Route path='/' element={<General />} exactly />
