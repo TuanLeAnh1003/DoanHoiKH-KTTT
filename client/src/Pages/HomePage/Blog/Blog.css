@@ -1,9 +1,6 @@
 .Blog__Dir {
-    position: absolute;
-    width: 609px;
-    height: 23px;
-    left: 210px;
-    top: 180px;
+    margin: 30px 0 0 210px;
+    width: 610px;
 }
 
 .Blog__list {
@@ -14,7 +11,6 @@
 .Blog__DirItem {
     width: auto;
     height: 23px;
-    top: 180px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 300;
@@ -33,27 +29,29 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;
-    position: absolute;
+    margin: 0 auto;
+    padding: 0;
     width: 1140px;
     height: 2607px;
-    left: 150px;
-    top: 250px;
+}
+
+.Blog__Content__Header {
+    position: relative;
+    width: 790px;
+    height: 217px;
 }
 
 .Blog__Label {
     display: flex;
+    width: 172px;
+    height: 24px;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 2px 16px;
-    position: absolute;
-    width: 172px;
-    height: 24px;
-    left: 40px;
-    top: 0px;
     background: #88D6A3;
     border-radius: 100px;
+    margin-left: 40px;
 }
 
 .Blog__Label__Name {
@@ -74,11 +72,7 @@
 }
 
 .Blog__Title {
-    position: absolute;
-    width: 750px;
-    height: 120px;
-    left: 40px;
-    top: 31px;
+    margin: 7px 0 0 40px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -89,18 +83,21 @@
     text-align: left;
 }
 
+.Blog__Title__Footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px auto 30px;
+    align-items: center;
+    width: 710px;
+}
+
 .Blog__Time {
-    position: absolute;
-    width: 87px;
-    height: 23px;
-    left: 40px;
-    top: 160px;
     font-family: 'Inter';
     font-style: italic;
     font-weight: 300;
     font-size: 16px;
     line-height: 22px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     letter-spacing: -0.0008em;
     color: #807F8A;
@@ -108,12 +105,10 @@
 
 
 .Blog__Interact {
-    position: absolute;
+
     width: 199px;
     height: 32px;
-    left: 551px;
-    top: 155px;
-    display: flex;
+    display: inline-flex;
 }
 
 .Blog__Button {
@@ -128,6 +123,7 @@
     flex: none;
     border-width: 0px;
     margin: 0 10px;
+
 }
 
 .Blog__Button__Icon {
@@ -154,28 +150,15 @@
 }
 
 .Blog__Line {
+    width: 750px;
     border: 1px solid rgba(0, 0, 0, 0.15);
-}
-
-.Blog__Line__Pos1 {
-    position: absolute;
-    width: 748px;
-    left: 21px;
-    top: 217px;
-}
-
-.Blog__Content__Header {
-    position: absolute;
-    width: 840px;
-    height: 217px;
-    left: 0px;
-    top: 0px;
-    
+    margin: 0 71px 0 21px;
 }
 
 .Blog__Content__Body {
-    width: 840px;
-    height: 2607px;
+    margin: 25px 0 0 40px;
+    width: 850px;
+    height: auto;
 }
 
 .Blog__Content__Text {
@@ -193,54 +176,47 @@
 }
 
 .Blog__Paragraph1 {
-    position: absolute;
-    width: 749.69px;
-    height: 330px;
-    left: 40.31px;
-    top: 240px;
+    width: 750px;
+    margin: 0 70px 30px 0;
 }
 
 .Blog__Paragraph2 {
-    position: absolute;
     width: 749.69px;
     height: 26px;
-    left: 40px;
-    top: 600px;
+    font-family: 'Merriweather';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.0008em;
+    color: #252525;
+    text-align: left;
 }
 
 .Blog__Paragraph3 {
-    position: absolute;
-    width: 749.69px;
+    width: 750px;
     height: 60px;
-    left: 40px;
-    top: 643px;
 }
 
 .Blog__Content__List1 {
-    position: relative;
-    left: 40px;
-    top: 732px;
+    width: 750px;
+    display: flex;
+    flex-direction: column;
 }
 
 .Blog__Paragraph4 {
-    width: 435px;
-    height: 30px;
+    margin: 5px 0;
+    width: 700px;
 }
 
 .Blog__Paragraph5 {
-    position: absolute;
-    width: 749.69px;
-    height: 90px;
-    left: 40px;
-    top: 880px;
+    width: 750px;
 }
 
 .Blog__Paragraph6 {
-    position: absolute;
+    margin: 35px 0 25px;
     width: 749.69px;
     height: 51px;
-    left: 40.31px;
-    top: 1009px;
     font-family: 'Merriweather';
     font-style: normal;
     font-weight: 400;
@@ -252,18 +228,20 @@
 }
 
 .Blog__Paragraph7 {
-    position: absolute;
-    width: 749.69px;
+    width: 750px;
     height: 90px;
-    left: 40px;
-    top: 1090px;
+    margin-bottom: 25px;
+}
+
+.Blog__Img {
+    width: 750px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .Blog__Img1 {
-    position: absolute;
-    top: 1230px;
-    left: 40px;
-    width: 744px;
+    width: 750px;
     height: 558px;
     border-radius: 12px;
     flex: none;
@@ -273,11 +251,9 @@
 }
 
 .Blog__Img1__Desc {
-    position: absolute;
-    top: 1800px;
     width: 172px;
     height: 22px;
-    left: 329px;
+    margin: 8px;
     font-family: 'Poppins';
     font-style: normal;
     font-weight: 600;
@@ -291,18 +267,20 @@
 }
 
 .Blog__Paragraph8 {
-    position: absolute;
-    width: 749.69px;
+    width: 750px;
     height: 120px;
-    left: 35px;
-    top: 1895px;
+    margin: 75px 0 32px;
 }
 
+.Blog__Body__Tags {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: start;
+    width: 750px;
+}
 
 .Blog__Body__Tags__Name {
-    position: absolute;
-    left: 50px;
-    top: 2047px;
     width: 48px;
     height: 25px;
     font-family: 'Roboto';
@@ -319,12 +297,11 @@
 }
 
 .Blog__Body__Tags__List {
-    position: absolute;
-    width: 134px;
-    height: 21px;
-    display: inline-flex;
-    left: 75px;
-    top: calc(50% - 21px/2 + 758px);
+    align-items: center;
+    height: 31px;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
 }
 
 .Blog__Body__Tags__Item {
@@ -340,10 +317,8 @@
 }
 
 .Blog__Line__Pos2 {
-    position: absolute;
-    width: 748px;
-    left: 21px;
-    top: 2105px;
+    margin: 33px 0;
+
 }
 
 .Blog__Content__Footer {
@@ -353,11 +328,8 @@
     align-items: center;
     padding: 0px;
     gap: 30px;
-    position: absolute;
     width: 840px;
     height: 394px;
-    left: -11px;
-    top: 2137px;
     background: rgba(230, 243, 248, 0.15);
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
 }
@@ -447,9 +419,7 @@
     color: #FFFFFF;
 }
 
-.Blog__Side {
-    position: absolute; 
-    top: 0;
+.Blog__Side { 
     right: 0;
     display: flex;
     flex-direction: column;
@@ -461,7 +431,6 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-    filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.15));
 }
 
 .Blog__About {
@@ -470,7 +439,6 @@
     justify-content: space-between;
     align-items: flex-start;
     padding: 25px;
-    gap: 315px;
     width: 300px;
     height: 338px;
     background: linear-gradient(180deg, rgba(20, 84, 107, 0.54) 0%, rgba(20, 84, 107, 0.9) 100%), url('../../../Assets/Images/BlogImg3.jpg');
@@ -481,6 +449,8 @@
     flex-grow: 0;
     background-size: cover;
     background-position: center;
+    filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.15));
+
 }
 
 .Blog__About__Title {
@@ -525,9 +495,6 @@
 }
 
 .Blog__About__Desc {
-    position: absolute;
-    top: 108px;
-    left: 25px;
     width: 250px;
     height: 205px;
     font-family: 'Poppins';
@@ -540,13 +507,16 @@
     order: 1;
     align-self: stretch;
     flex-grow: 0;
+    text-align: left;
 }
 
-.Blog__Topic__List {
-    list-style: none;
+.Blog__Topic {
+    margin-top: 23px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .Blog__Topic__Title {
+    margin: 10px 33.5px 0;
     width: 233px;
     height: 28px;
     font-family: 'Inter';
@@ -559,9 +529,15 @@
     flex: none;
     order: 0;
     flex-grow: 0;
+    text-align: left;
+}
+
+.Blog__Topic__List {
+    list-style: none;
 }
 
 .Blog__Topic__Item {
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -572,7 +548,6 @@
     flex: none;
     order: 1;
     flex-grow: 0;
-    margin-top: 25px;
 }
 
 .Blog__Topic__Img {
@@ -598,23 +573,23 @@
     flex: none;
     order: 1;
     flex-grow: 0;
+    text-align: left;
+    margin: 0;
 }
 
 .Blog__Tags {
-    position: absolute;
-    top:1030px;
     width: 300px;
-    height: 344px;
+    height: 250px;
     flex: none;
     order: 2;
     flex-grow: 0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .Blog__Tags__Title {
-    position: absolute;
     width: 76px;
     height: 42px;
-    left: 32px;
+    margin: 33px auto 10px 33px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
@@ -625,11 +600,8 @@
 }
 
 .Blog__Tags__List {
-    margin: -8px;
     width: 100%;
-    position: absolute;
-    top: 60px;
-    left: 0;
+    margin-left: 15px;
     display: flex;
     flex-wrap: wrap;
     padding: 0;
