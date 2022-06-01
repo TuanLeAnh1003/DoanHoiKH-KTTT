@@ -3,6 +3,7 @@
   max-width: 100vw;
   background-image: url(../../Assets/Images/cover-header.jpg);
   background-size: 100vw;
+  width: 100%;
 }
 
 .header__top {

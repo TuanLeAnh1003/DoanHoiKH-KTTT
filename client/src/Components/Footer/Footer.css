@@ -5,6 +5,11 @@
   color: #07719E;
   font-size: 13px;
   text-align: left;
+  bottom:0;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .footer > .container {
