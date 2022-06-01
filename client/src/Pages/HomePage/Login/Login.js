@@ -55,7 +55,7 @@ function Login() {
                         </div>
                         <hr></hr>
                         <div>
-                              <p className='notes'> Nếu bạn chưa có tài khoản, hãy liên hệ với tổ chức của bạn.</p>
+                          <p className='notes'> Nếu bạn chưa có tài khoản, hãy liên hệ với tổ chức của bạn.</p>
                         </div>
                       </form>
                     </div>
