@@ -7,9 +7,9 @@
   text-align: left;
   bottom:0;
   height: auto;
-  display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  position: flex;
 }
 
 .footer > .container {
