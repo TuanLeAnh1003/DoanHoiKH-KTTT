@@ -154,6 +154,7 @@ function Home() {
       {
         titleList.map((item, index) => (
           <NewsItem
+            key={index}
             title={item.title}
             index={index}
             newsList={newsList}

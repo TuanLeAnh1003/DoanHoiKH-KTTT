@@ -1,0 +1,84 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-decoration: none !important;
+}
+
+html {
+    height: 100%;
+    position: relative;
+}
+
+h2 {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 42px;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.fullbody {
+    background-image: url("../../../Assets/Images/bg_signin.png");
+    background-position: center center;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    height: auto;
+    background-repeat: no-repeat;
+    height: 700px;
+    left: 0px;
+    top: 150px;
+    display: block;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.form-outline {
+    align-items: center;
+    padding: 2% 7% 1% 5%;
+}
+
+.card {
+    border-radius: 12px;
+    width: 520px;
+    background: rgba(255, 255, 255, 0.85);
+}
+.btn-custom {      
+    background-color: #FF7B54;
+    color: #fff;
+    font-weight: bold;
+    width: 370px;
+    height: 45px;
+    margin-left: 5%;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.btn-custom:active, .btn-custom:focus, .btn-custom:hover {  
+    background-color: #fe6c40;    
+    color: #fff;
+    -webkit-transform: scale( 1.15 );   
+    -ms-transform: scale( 1.15 );   transform: scale( 1.15 );
+}
+
+.forgotpassword {
+    color: #FF7B54;
+}
+
+.rememberpass {
+    color: #FF7B54;
+    padding: 2% 7% 0% 0%;
+}
+
+.showpass {
+    padding-right: 0;
+    cursor: pointer;
+}
+
+.notes {
+    font-style: italic;
+}

@@ -1,6 +1,5 @@
 import React from 'react'
 import { FacebookProvider, Like, LikeLayout, LikeAction, Share, ShareButton, EmbeddedPost, Login, Comments, Feed } from 'react-facebook';
-import ReactFBLike from 'react-fb-like';
 
 function LikeAndShare() {
   console.log();

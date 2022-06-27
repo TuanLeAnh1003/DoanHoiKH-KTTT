@@ -23,6 +23,7 @@ function NewsItem({ title, index, newsList }) {
             newsList.map((item, index) => (
               index !== 0 && 
               <NewsItemOutstanding
+                key={index}
                 news= {item}
                 index={index}
               />
