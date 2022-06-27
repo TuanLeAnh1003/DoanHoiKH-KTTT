@@ -9,6 +9,9 @@ import ViewMore from '../../../Components/ViewMore/ViewMore';
 import NewsItem from '../../../Components/NewsItem/NewsItem';
 import NewsItemImg from '../../../Assets/Images/news-item.png'
 import VideoDoanHoi from '../../../Assets/Videos/video-doan-hoi.mp4'
+import LikeAndShare from '../../../Components/SocialPlugin/LikeAndShare';
+import { FacebookProvider, Like, Group, LikeLayout, LikeAction, Page, Share, ShareButton, EmbeddedPost, Login, Comments, Feed } from 'react-facebook';
+
 
 function Home() {
   const titleList = [
@@ -101,6 +104,28 @@ function Home() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
+
+      <FacebookProvider appId={process.env.REACT_APP_FACEBOOK_APP_ID}>
+        <Share href="https://www.facebook.com/UIT.ISE/posts/2148508611981543">
+          {({ handleClick, loading }) => (
+            <button type="button" disabled={loading} onClick={handleClick}>Share</button>
+          )}
+        </Share>
+        <Comments href="https://www.facebook.com/UIT.ISE/posts/2148508611981543" />
+        {/* <EmbeddedPost href="https://www.facebook.com/UIT.ISE/posts/2148508611981543" width="500" /> */}
+        <Feed link="https://www.facebook.com/UIT.ISE/posts/2148508611981543">
+          {({ handleClick }) => (
+            <button type="button" onClick={handleClick}>Share on Feed</button>
+          )}
+        </Feed>
+        <Group
+          href="https://www.facebook.com/groups/375934682909754"
+          width="300"
+          showSocialContext={true}
+          showMetaData={true}
+          skin="light"
+        />
+      </FacebookProvider>
 
       <Container>
         <Row className="home__container-row1">
