@@ -125,3 +125,26 @@
 .header__navbar-search-wrap svg:hover {
   color: #529cba;
 }
+
+.header__brand {
+  padding: 13px;
+  background-color: #fff;
+}
+
+.header__brand svg {
+  font-size: 20px;
+}
+
+.header__link {
+  display: block;
+  width: 100%;
+  padding: 0.25rem 1rem;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}

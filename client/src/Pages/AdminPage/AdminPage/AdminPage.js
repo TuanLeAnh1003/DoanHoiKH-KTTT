@@ -8,10 +8,10 @@ import NotFound from '../../HomePage/NotFound/NotFound';
 import { Container, Row, Col } from 'react-bootstrap'
 import AdminSidebar from '../../../Components/AdminSidebar/AdminSidebar';
 
-function AdminPage() {
+function AdminPage({ currentUser, setCurrentUser}) {
   return (
     <div>
-      <Header />
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Container>
         <Row>
           <Col sm={3}>

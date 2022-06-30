@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Home.css'
 import { Container, Carousel, Row, Col } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.css";
@@ -55,6 +55,10 @@ function Home() {
       label: "Nghiên cứu khoa học"
     }
   ]
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className='home'>

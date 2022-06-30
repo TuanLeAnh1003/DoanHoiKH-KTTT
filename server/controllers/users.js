@@ -1,6 +1,6 @@
 import { UserModel } from '../models/UserModel.js'
 
-export const getUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     // create sample
 
@@ -20,5 +20,24 @@ export const getUsers = async (req, res) => {
     res.status(500).json({
       error: error
     })
+  }
+}
+
+export const deleteUser = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.id)
+    // const user = await UserModel.findByIdAndDelete(req.params.id)
+    res.status(200).json("Delete successfully")
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+export const getUserById = async (req, res) => {
+  try {
+    const user = await UserModel.findById(req.params.userId)
+    res.status(200).json(user)
+  } catch (err) {
+    res.status(500).json(err)
   }
 }

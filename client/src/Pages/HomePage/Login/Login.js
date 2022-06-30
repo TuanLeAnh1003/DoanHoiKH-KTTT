@@ -1,10 +1,83 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Login.css'
 import "bootstrap/dist/css/bootstrap.css";
-import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { solid, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import UserApi from '../../../Apis/UserApi';
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../../store/actions/userAction';
+import firebase, { auth } from '../../../firebase/config'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
+  const [isLoginFb, setIsLoginFb] = useState(false)
+  const [currentUser, setCurrentUser] = useState({})
+
+  const navigate = useNavigate()
+
+  const fbProvider = new firebase.auth.FacebookAuthProvider()
+  const dispatch = useDispatch()
+
+  const handleLogin = () => {
+    UserApi.login({
+      username: username,
+      password: password
+    })
+    .then((res) => {
+      console.log(res);
+      const cur = {
+        userId: res._id,
+        image: res.image,
+        name: res.username,
+        admin: res.admin
+      }
+
+      dispatch(setUser(cur))
+      localStorage.setItem('userId', res._id)
+      localStorage.setItem('image', res.image)
+      localStorage.setItem('name', res.username)
+      localStorage.setItem('isLogInFb', false)
+
+      if (res.admin)
+      {
+        localStorage.setItem('role', true)
+        navigate('/admin')
+      }
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        const cur = {
+          userId: user._delegate.uid,
+          image: user._delegate.photoURL,
+          name: user._delegate.displayName
+        }
+
+        localStorage.setItem('userId', user._delegate.uid)
+        localStorage.setItem('image', user._delegate.photoURL)
+        localStorage.setItem('name', user._delegate.displayName)
+        localStorage.setItem('isLogInFb', true)
+
+        dispatch(setUser(cur))
+        navigate('/')
+        window.location.reload();
+      }
+      else navigate('/login')
+    })
+  }, [])
+
+  const handleLoginFacebook = () => {
+    auth.signInWithPopup(fbProvider)
+  }
+
   return (
     <section className="fullbody">
           <div className="px-4 py-5 px-md-5 text-center text-lg-start">
@@ -29,27 +102,32 @@ function Login() {
                       <h2>Đăng nhập</h2>
                       <form>
                         <div className="form-outline mb-4">
-                          <label className="form-label" for="form3Example3">Tên đăng nhập</label>
-                          <input type="email" className="form-control" placeholder='Nhập tên đăng nhập' />
+                          <label className="form-label" htmlFor="form3Example3">Tên đăng nhập</label>
+                          <input type="email" className="form-control" placeholder='Nhập tên đăng nhập' onChange={e=>setUsername(e.target.value)} />
                         </div>
 
                         <div className="form-outline mb-4">
-                          <label className="form-label" for="form3Example4">Mật khẩu</label>
-                          <input type="password" className="form-control" placeholder='Nhập mật khẩu' />
+                          <label className="form-label" htmlFor="form3Example4">Mật khẩu</label>
+                          <input type="password" className="form-control" placeholder='Nhập mật khẩu' onChange={e => setPassword(e.target.value)} />
                         </div>
 
-                        <div class="d-grid gap-2">
-                          <button class="btn btn-custom btn-custom-primary" type="button">Đăng nhập</button>
+                        <div className="d-grid gap-2">
+                          <button className="btn btn-custom btn-custom-primary" type="button" onClick={handleLogin}>Đăng nhập</button>
                         </div>
 
-                        <div class="row">
-                          <div class="col-md-6 mb-4">
+                        <div className="row">
+                          <FontAwesomeIcon style={{height: '25px', color: '#0d6efd'}} icon={brands("facebook")} onClick={handleLoginFacebook}/>
+                        </div>
+                        
+
+                        <div className="row">
+                          <div className="col-md-6 mb-4">
                             <div className="form-check d-flex justify-content-center mb-4">
                               <FontAwesomeIcon className="rememberpass" icon={solid("toggle-on")}/>
-                              <label className="form-check-label" for="form2Example33"> Ghi nhớ </label>
+                              <label className="form-check-label" htmlFor="form2Example33"> Ghi nhớ </label>
                           </div>
                           </div>
-                          <div class="col-md-6 mb-4">
+                          <div className="col-md-6 mb-4">
                               <p> <a className='forgotpassword' href='#'> Quên mật khẩu? </a></p>
                           </div>
                         </div>

@@ -1,8 +1,16 @@
 import express from 'express';
-import { getUsers } from '../controllers/users.js'
+import { getAllUsers, deleteUser, getUserById } from '../controllers/users.js'
+import { verifyToken } from '../controllers/middleware.js';
 
 const router = express.Router();
 
-router.get('/', getUsers);
+// Get user by id
+router.get('/:userId', getUserById)
+
+// Get all users
+router.get('/', verifyToken,  getAllUsers);
+
+// Delete user
+router.delete('/:id', deleteUser);
 
 export default router;
