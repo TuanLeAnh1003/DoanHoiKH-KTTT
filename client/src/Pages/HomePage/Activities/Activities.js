@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Activities.css'
 import "bootstrap/dist/css/bootstrap.css";
 import ViewMore from '../../../Components/ViewMore/ViewMore';
@@ -7,44 +7,217 @@ import Thumbnail from '../../../Assets/Images/thumbnail.png';
 import NewsImage2 from '../../../Assets/Images/Image2.png';
 import NewsImage1 from '../../../Assets/Images/Image1.png';
 import NewsImage3 from '../../../Assets/Images/Image3.png';
+import PostApi from '../../../Apis/PostApi'
+import { useNavigate, Link } from 'react-router-dom';
 
+function Activities({ title }) {
+  const [postsList, setPostsList] = useState()
+  const [arrayOfPostsByLabel, setArrayOfPostsByLabel] = useState([])
 
-function Activities() {
+  const navigate = useNavigate()
+
+  let labelList = []
+
+  if (title) {
+    switch (title) {
+      case "Giới thiệu":
+        labelList = ["Đoàn - Hội KH&KTTT", "Cơ cấu nhân sự", "Thông tin liên hệ", "Danh hiệu SV5T - TNTT"]
+        break;
+      case "Hoạt động":
+        labelList = ["Bản tin Đoàn - Hội", "Hoạt động đang diễn ra", "Hoạt động sắp diễn ra", "Các cuộc thi của Đoàn Thanh niên", "Hoạt động tại UIT"]
+        break;
+      case "Tin tức":
+        labelList = ["Thông báo", "Tin công nghệ", "Sinh viên tiêu biểu", "Những câu chuyện đẹp tại ISE"]
+        break;
+      case "Hỗ trợ":
+        labelList = ["Quy trình - văn bản", "Học bổng", "Việc làm - Thực tập", "Khác"]
+        break;
+      case "Học tập":
+        labelList = ["Cuộc thi học thuật", "Kho tài liệu", "Nghiên cứu khoa học cùng ISE"]
+        break;
+      default:
+        break;
+    }
+  }
+
+  useEffect(() => {
+    for (let label of labelList) {
+      PostApi.getPostsByLabel({
+        title: title,
+        label: label
+      })
+      .then((res) => {
+        if (res) {
+          setArrayOfPostsByLabel(rest => [...rest, res[0]])
+        }
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    PostApi.getPostsByTitle({
+      title: title
+    })
+    .then((res) => {
+      setPostsList(res);
+      console.log(res);
+    })
+
+    console.log(postsList);
+  }, [title])
+
+  const handleClickViewMore = (data) => {
+    let labelLink = ''
+    switch (data) {
+      case "Đoàn hội KH&KTTT":
+        labelLink = "doan-hoi";
+        break;
+      case "Cơ cấu nhân sự":
+        labelLink = "co-cau";
+        break;
+      case "Danh hiệu SV5T - TNTT":
+        labelLink = "danh-hieu";
+        break;
+      case "Bản tin Đoàn - Hội":
+        labelLink = "ban-tin";
+        break;
+      case "Hoạt động đang diễn ra":
+        labelLink = "dang-dien-ra";
+        break;
+      case "Hoạt động sắp diễn ra":
+        labelLink = "sap-dien-ra";
+        break;
+      case "Các cuộc thi của Đoàn Thanh niên":
+        labelLink = "cac-cuoc-thi";
+        break;
+      case "Hoạt động tại UIT":
+        labelLink = "tai-uit";
+        break;
+      case "Thông báo":
+        labelLink = "thong-bao";
+        break;
+      case "Tin công nghệ":
+        labelLink = "tin-cong-nghe";
+        break;
+      case "Sinh viên tiêu biểu":
+        labelLink = "sinh-vien-tieu-bieu";
+        break;
+      case "Những câu chuyện đẹp tại ISE":
+        labelLink = "cau-chuyen-dep";
+        break;
+      case "Quy trình - văn bản":
+        labelLink = "quy-trinh";
+        break;
+      case "Học bổng":
+        labelLink = "hoc-bong";
+        break;
+      case "Việc làm - Thực tập":
+        labelLink = "viec-lam";
+        break;
+      case "Khác":
+        labelLink = "khac";
+        break;
+      case "Cuộc thi học thuật":
+        labelLink = "cuoc-thi";
+        break;
+      case "Kho tài liệu":
+        labelLink = "tai-lieu";
+        break;
+      case "Nghiên cứu khoa học cùng ISE":
+        labelLink = "nghien-cuu";
+        break;
+      default:
+        break;
+    }
+    navigate(`./${labelLink}/${postsList[0]?._id}`, { replace: true })
+  }
+
   return (
     <div>
       <div className='cover'>
-        <nav aria-label="breadcrumb">
-          <ol className="breadcrumb breadcrumb-custom">
-            <li className="breadcrumb-item"><a href="#">Trang chủ</a></li>
-            <li className="breadcrumb-item active" aria-current="page">Hoạt động</li>
+        <nav aria-label='breadcrumb'>
+          <ol className='breadcrumb breadcrumb-custom'>
+            <li className='breadcrumb-item'>
+              <Link to='/'>Trang chủ</Link>
+            </li>
+            <li className='breadcrumb-item active' aria-current='page'>
+              {title}
+            </li>
           </ol>
         </nav>
         <div className='title'>
-          <h1>Hoạt động</h1>
-          <p>Những thông tin mới nhất về các hoạt động tại khoa KH&KTTT, các thông tin về các chương trình cho sinh viên khoa KH&KTTT.</p>
+          <h1>{title}</h1>
+          <p>
+            Những thông tin mới nhất về các hoạt động tại khoa KH&KTTT, các
+            thông tin về các chương trình cho sinh viên khoa KH&KTTT.
+          </p>
         </div>
       </div>
 
-      <ViewMore 
-        title="Website Đoàn - Hội ISE có gì?"
-        subTitle="Khám phá"
-      />
+      <ViewMore title='Website Đoàn - Hội ISE có gì?' subTitle='Khám phá' />
 
       <div className='tabcontent'>
-        <Tabs>
-          <div label="Tất cả">
+        <Tabs title={title} setPostsList={setPostsList} postsList={postsList}>
+          <div label='Tất cả'>
             <div className='livenews'>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
                     <div className='layoutleft'>
-                      <p>All news</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
+                      <p>{postsList && postsList[0].label[title]}</p>
+                      <h2>{postsList && postsList[0].title}</h2>
                     </div>
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
+                      <p>
+                      {postsList && postsList[0].title}
+                      </p>
+                      <a onClick={() => handleClickViewMore(postsList[0].label[title][0])}>Xem thêm </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div label={labelList[0]}>
+            <div className='livenews'>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-md-6'>
+                    <div className='layoutleft'>
+                      <p>{labelList[0]}</p>
+                      <h2>{arrayOfPostsByLabel[0]?.title}</h2>
+                    </div>
+                  </div>
+                  <div className='col-md-6'>
+                    <div className='layoutright'>
+                      <p>
+                        {arrayOfPostsByLabel[0]?.content}
+                      </p>
+                      <a onClick={() => navigate(`./${postsList[0]._id}`, { replace: true })}>Xem thêm </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div label={labelList[1]}>
+            <div className='livenews'>
+              <div className='container'>
+                <div className='row'>
+                  <div className='col-md-6'>
+                    <div className='layoutleft'>
+                      <p>{labelList[1]}</p>
+                      <h2>{arrayOfPostsByLabel[1]?.title}</h2>
+                    </div>
+                  </div>
+                  <div className='col-md-6'>
+                    <div className='layoutright'>
+                      <p>
+                        {arrayOfPostsByLabel[1]?.content}
+                      </p>
                       <a href='#'>Xem thêm </a>
                     </div>
                   </div>
@@ -52,19 +225,21 @@ function Activities() {
               </div>
             </div>
           </div>
-          <div label="Bản tin Đoàn - Hội">
+          <div label={labelList[2]}>
             <div className='livenews'>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
                     <div className='layoutleft'>
-                      <p>bản tin Đoàn - Hội</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
+                      <p>{labelList[2]}</p>
+                      <h2>{arrayOfPostsByLabel[2]?.title}</h2>
                     </div>
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
+                      <p>
+                        {arrayOfPostsByLabel[2]?.content}
+                      </p>
                       <a href='#'>Xem thêm </a>
                     </div>
                   </div>
@@ -72,19 +247,21 @@ function Activities() {
               </div>
             </div>
           </div>
-          <div label="Hoạt động đang diễn ra">
+          <div label={labelList[3]}>
             <div className='livenews'>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
                     <div className='layoutleft'>
-                      <p>Live - news</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
+                      <p>{labelList[3]}</p>
+                      <h2>{arrayOfPostsByLabel[3]?.title}</h2>
                     </div>
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
+                      <p>
+                        {arrayOfPostsByLabel[3]?.content}
+                      </p>
                       <a href='#'>Xem thêm </a>
                     </div>
                   </div>
@@ -92,66 +269,28 @@ function Activities() {
               </div>
             </div>
           </div>
-          <div label="Hoạt động sắp diễn ra">
+          {/* <div label={labelList[4]}>
             <div className='livenews'>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
                     <div className='layoutleft'>
-                      <p>Hoạt động sắp diễn ra</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
+                      <p>{labelList[4]}</p>
+                      <h2>{arrayOfPostsByLabel[4]?.title}</h2>
                     </div>
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
+                      <p>
+                        {arrayOfPostsByLabel[4]?.content}
+                      </p>
                       <a href='#'>Xem thêm </a>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div label="Các cuộc thi của Đoàn Thanh niên">
-            <div className='livenews'>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='layoutleft'>
-                      <p>Các cuộc thi</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
-                    </div>
-                  </div>
-                  <div className='col-md-6'>
-                    <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
-                      <a href='#'>Xem thêm </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div label="Hoạt động tại UIT">
-            <div className='livenews'>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='layoutleft'>
-                      <p>Hoạt động UIT</p>
-                      <h2>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</h2>
-                    </div>
-                  </div>
-                  <div className='col-md-6'>
-                    <div className='layoutright'>
-                      <p>Hội nghị sinh viên khoa Khoa học và Kỹ thuật Thông tin được tổ chức vào ngày 19/04/2022 đã kết thúc trong sự thành công và những kết quả tốt đẹp nhất. <br></br><br></br>Không khí của hội trường E đã nóng hơn bao giờ hết bởi sự quan tâm tham gia của tất cả các bạn sinh viên khoa Khoa học và Kỹ thuật Thông tin của chúng ta, cùng với đó, những câu hỏi, thắc mắc của các bạn sinh viên và sự giải đáp nhiệt tình nhưng không kém phần thân thiện, hóm hỉnh của các Thầy Cô đã góp phần khiến cho buổi Hội nghị thêm phần thành công rực rỡ.</p>
-                      <a href='#'>Xem thêm </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </div> */}
         </Tabs>
       </div>
 
@@ -160,104 +299,130 @@ function Activities() {
           <div className='row'>
             <div className='col-md-8'>
               <h2>Bài đăng</h2>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div className='dropdown'>
+                <button
+                  className='btn btn-secondary dropdown-toggle'
+                  type='button'
+                  id='dropdownMenuButton'
+                  data-toggle='dropdown'
+                  aria-haspopup='true'
+                  aria-expanded='false'
+                >
                   Mới nhất
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Từ A - Z</a>
-                  <a class="dropdown-item" href="#">Lượt xem nhiều nhất</a>
+                <div
+                  className='dropdown-menu'
+                  aria-labelledby='dropdownMenuButton'
+                >
+                  <a className='dropdown-item' href='#'>
+                    Từ A - Z
+                  </a>
+                  <a className='dropdown-item' href='#'>
+                    Lượt xem nhiều nhất
+                  </a>
                 </div>
               </div>
               <div className='List_News'>
-                <div className='container'>
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <img className='News_Image' src={NewsImage3} alt='Thumbnail'></img>
+                {
+                  postsList?.map((post, index) => index < 3 && (
+                    <div key={index} className='container'>
+                      <div className='row'>
+                        <div className='col-md-6'>
+                          <img
+                            className='News_Image'
+                            src={post.image}
+                            alt='Thumbnail'
+                          ></img>
+                        </div>
+                        <div className='col-md-6'>
+                          <h4 className='News_Item_Title'>
+                            {post.title}
+                          </h4>
+                          <p className='News_Item_Time'>{new Date(post.createdAt).toLocaleDateString('pt-PT')}</p>
+                          <p className='News_Item_Description'>
+                            {
+                              post.content.length > 10 ? (
+                                `${post.content.substring(0, 10)}...`
+                              ) : (
+                                post.content
+                              )
+                            }
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className='col-md-6'>
-                      <h4 className='News_Item_Title'>Pathway to the Mediterraneanv</h4>
-                      <p className='News_Item_Time'>04/02/2021</p>
-                      <p className='News_Item_Description'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain a…</p>
-                    </div>
-                  </div>
-                </div>
 
-                <div className='container'>
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <img className='News_Image' src={NewsImage2} alt='Thumbnail'></img>
-                    </div>
-                    <div className='col-md-6'>
-                      <h4 className='News_Item_Title'>Pathway to the Mediterraneanv</h4>
-                      <p className='News_Item_Time'>04/02/2021</p>
-                      <p className='News_Item_Description'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain a…</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className='container'>
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <img className='News_Image' src={NewsImage1} alt='Thumbnail'></img>
-                    </div>
-                    <div className='col-md-6'>
-                      <h4 className='News_Item_Title'>Pathway to the Mediterraneanv</h4>
-                      <p className='News_Item_Time'>04/02/2021</p>
-                      <p className='News_Item_Description'>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain a…</p>
-                    </div>
-                  </div>
-                </div>
-
-              </div>  
+                  ))
+                }
+              </div>
             </div>
             <div className='col-md-4'>
               <div className='Trending__Topic'>
                 <h2>Trending</h2>
                 <ul className='Trending__Topic__List'>
                   <li className='Trending__Topic__Item'>
-                    <img className='Trending__Topic__Img' src={Thumbnail} alt='Thumbnail'></img>
-                    <p className='Trending__Topic__Desc'>Pathway to the Mediterranean</p>
+                    <img
+                      className='Trending__Topic__Img'
+                      src={Thumbnail}
+                      alt='Thumbnail'
+                    ></img>
+                    <p className='Trending__Topic__Desc'>
+                      Pathway to the Mediterranean
+                    </p>
                   </li>
                   <li className='Trending__Topic__Item'>
-                    <img className='Trending__Topic__Img' src={Thumbnail} alt='Thumbnail'></img>
-                    <p className='Trending__Topic__Desc'>Pathway to the Mediterranean</p>
+                    <img
+                      className='Trending__Topic__Img'
+                      src={Thumbnail}
+                      alt='Thumbnail'
+                    ></img>
+                    <p className='Trending__Topic__Desc'>
+                      Pathway to the Mediterranean
+                    </p>
                   </li>
                   <li className='Trending__Topic__Item'>
-                    <img className='Trending__Topic__Img' src={Thumbnail} alt='Thumbnail'></img>
-                    <p className='Trending__Topic__Desc'>Pathway to the Mediterranean</p>
+                    <img
+                      className='Trending__Topic__Img'
+                      src={Thumbnail}
+                      alt='Thumbnail'
+                    ></img>
+                    <p className='Trending__Topic__Desc'>
+                      Pathway to the Mediterranean
+                    </p>
                   </li>
                 </ul>
                 <div className='Trending__Tags'>
                   <h2>Tags</h2>
                   <div className='Trending__Tags__List'>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Affordable</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Europe</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Most visitted</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Luxury</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Activity</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Swimming</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Best food</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Trending</span>
-                      </button>
-                      <button className='Trending__Tags__Button'>
-                        <span className='Trending__Tags__Text'>Asia</span>
-                      </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Affordable</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Europe</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>
+                        Most visitted
+                      </span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Luxury</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Activity</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Swimming</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Best food</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Trending</span>
+                    </button>
+                    <button className='Trending__Tags__Button'>
+                      <span className='Trending__Tags__Text'>Asia</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -266,6 +431,6 @@ function Activities() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 export default Activities

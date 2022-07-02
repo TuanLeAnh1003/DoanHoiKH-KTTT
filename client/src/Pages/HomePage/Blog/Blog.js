@@ -1,11 +1,110 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './Blog.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
 import BlogImg1 from '../../../Assets/Images/BlogImg1.jpg'
 import BlogImg2 from '../../../Assets/Images/BlogImg2.jfif'
+import { useParams } from 'react-router-dom'
+import PostApi from '../../../Apis/PostApi';
 
-function Blog() {
+function Blog({title}) {
+  const [post, setPost] = useState()
+  const [postsListTitle, setPostsListTitle] = useState()
+  const [postsListLabel, setPostsListLabel] = useState()
+
+  
+  const { postId, lab } = useParams()
+  
+  let label = ''
+  switch (lab) {
+    case "doan-hoi":
+      label = "Đoàn hội KH&KTTT";
+      break;
+    case "co-cau":
+      label = "Cơ cấu nhân sự";
+      break;
+    case "danh-hieu":
+      label = "Danh hiệu SV5T - TNTT";
+      break;
+    case "ban-tin":
+      label = "Bản tin Đoàn - Hội";
+      break;
+    case "dang-dien-ra":
+      label = "Hoạt động đang diễn ra";
+      break;
+    case "sap-dien-ra":
+      label = "Hoạt động sắp diễn ra";
+      break;
+    case "cac-cuoc-thi":
+      label = "Các cuộc thi của Đoàn Thanh niên";
+      break;
+    case "tai-uit":
+      label = "Hoạt động tại UIT";
+      break;
+      case "thong-bao":
+        label = "Thông báo";
+      break;
+    case "tin-cong-nghe":
+      label = "Tin công nghệ";
+      break;
+    case "sinh-vien-tieu-bieu":
+      label = "Sinh viên tiêu biểu";
+      break;
+    case "cau-chuyen-dep":
+      label = "Những câu chuyện đẹp tại ISE";
+      break;
+    case "quy-trinh":
+      label = "Quy trình - văn bản";
+      break;
+    case "hoc-bong":
+      label = "Học bổng";
+      break;
+    case "viec-lam":
+      label = "Việc làm - Thực tập";
+      break;
+    case "khac":
+      label = "Khác";
+      break;
+    case "cuoc-thi":
+      label = "Cuộc thi học thuật";
+      break;
+    case "tai-lieu":
+      label = "Kho tài liệu";
+      break;
+    case "lien-he":
+      label = "Thông tin liên hệ";
+      break;
+    case "nghien-cuu":
+      label = "Nghiên cứu khoa học cùng ISE";
+      break;
+    default:
+      break;
+  }
+
+  useEffect(() => {
+    PostApi.getPostsByTitle({
+      title: title
+    })
+    .then(res => {
+      setPostsListTitle(res);
+    })
+    PostApi.getPostsByLabel({
+      label: label
+    })
+    .then(res => {
+      setPostsListLabel(res);
+    })
+  }, [])
+
+  useEffect(() => {
+    PostApi.getPostById({
+      postId: postId
+    })
+    .then(res => {
+      setPost(res);
+    })
+  }, [postId])
+
   return (
     <div>
       <div>
@@ -13,22 +112,22 @@ function Blog() {
           <ul className='Blog__list'>
             <li className='Blog__DirItem'>Trang chủ</li>
             <li className='Blog__DirItem Blog__DirIcon'><FontAwesomeIcon icon={solid('angle-right')}/></li>
-            <li className='Blog__DirItem'>Hoạt động</li>
+            <li className='Blog__DirItem'>{title}</li>
             <li className='Blog__DirItem Blog__DirIcon'><FontAwesomeIcon icon={solid('angle-right')}/></li>
-            <li className='Blog__DirItem'>Bản tin Đoàn - Hội</li>
+            <li className='Blog__DirItem'>{label}</li>
             <li className='Blog__DirItem Blog__DirIcon'><FontAwesomeIcon icon={solid('angle-right')}/></li>
-            <li className='Blog__DirItem'>Tổng kết Hội nghị Sinh viên...</li>
+            <li className='Blog__DirItem'>{post && (post?.title.length > 25 ? `${post?.title.slice(0, 25)}` : post.title)}</li>
           </ul>
         </div>
         <div className='Blog__Content'>
           <div className='Blog__Main'>
             <div className='Blog__Content__Header'>
               <div className='Blog__Label'>
-                <div className='Blog__Label__Name'>BẢN TIN ĐOÀN - HỘI</div>
+                <div className='Blog__Label__Name'>{label}</div>
               </div>
-              <div className='Blog__Title'>Tổng kết Hội nghị Sinh viên KH&KTTT năm 2022</div>
+              <div className='Blog__Title'>{post?.title}</div>
               <div className='Blog__Title__Footer'>
-                <div className='Blog__Time'>01/05/2022</div>
+                <div className='Blog__Time'>{new Date(post?.createdAt).toLocaleDateString('pt-PT')}</div>
                 <div className='Blog__Interact'>
                   <button className='Blog__Button'>
                     <div className='Blog__Button__Icon'><FontAwesomeIcon icon={solid('thumbs-up')}/></div>
@@ -43,12 +142,8 @@ function Blog() {
               <div className='Blog__Line__Pos1 Blog__Line'></div>
             </div>
             <div className='Blog__Content__Body'>
-              <p className='Blog__Paragraph1 Blog__Content__Text'>
-                  Believe it or not, copywriting is one of the most important content-creation skills a designer can possess. If you think about it, design exists to support and deliver content—not the other way around.' <br></br> <br></br>
-                  As a designer, content should be the driving force behind many of your decisions, whether you’re creating the content or someone else is. So if you can understand how to write effective copy (and understand the purpose that it serves), you’ll be able to better serve your clients and ultimately create better designs. <br></br> <br></br>
-                  In this article, we’ll cover some helpful copywriting tips for designers to help you build better experiences.
-              </p>
-              <p className='Blog__Paragraph2'>Sales Copywriting vs. UX copywriting</p>
+              <p className='Blog__Paragraph1 Blog__Content__Text'>{post?.content}</p>
+              {/* <p className='Blog__Paragraph2'>Sales Copywriting vs. UX copywriting</p>
               <p className='Blog__Paragraph3 Blog__Content__Text'>First things first, understand the nature of the copy you’re writing for. There are some subtle differences between sales (or persuasive) copywriting and UX writing.</p>
               <ul className='Blog__Content__List1'>
                 <li className='Blog__Paragraph4 Blog__Content__Text'>Why consistent writing makes you a better designer</li>
@@ -62,14 +157,13 @@ function Blog() {
                 <img src={BlogImg1} alt='BlogImg1' className='Blog__Img1'></img>
                 <p className='Blog__Img1__Desc'>illustration by Camille Pagni</p>
               </div>
-              <p className='Blog__Paragraph8 Blog__Content__Text'>Make your copy easy for visitors to scan. That means keeping paragraphs short (2-4 sentences is a good rule of thumb), using plenty of headlines, adding bulleted lists where they make sense, and even using bold and italic text (sparingly) to highlight the most important parts of the content.</p>
+              <p className='Blog__Paragraph8 Blog__Content__Text'>Make your copy easy for visitors to scan. That means keeping paragraphs short (2-4 sentences is a good rule of thumb), using plenty of headlines, adding bulleted lists where they make sense, and even using bold and italic text (sparingly) to highlight the most important parts of the content.</p> */}
               <div className='Blog__Body__Tags'>
                 <span className='Blog__Body__Tags__Name'>Tags</span>
                 <ul className='Blog__Body__Tags__List'>
-                  <li className='Blog__Body__Tags__Item'>#hometownchachacha </li>
-                  <li className='Blog__Body__Tags__Item'>#ShinMinAh</li>
-                  <li className='Blog__Body__Tags__Item'>#KimSeonHo</li>
-                  <li className='Blog__Body__Tags__Item'>#PhimHanQuoc</li>
+                  <li className='Blog__Body__Tags__Item'>#{title.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/\s/g, '').toLowerCase()} </li>
+                  <li className='Blog__Body__Tags__Item'>#{lab}</li>
+                  <li className='Blog__Body__Tags__Item'>#{post?.title.slice(0,10).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/\s/g, '').toLowerCase()}</li>
                 </ul>
               </div>
               <div className='Blog__Line__Pos2 Blog__Line'></div>
@@ -77,21 +171,19 @@ function Blog() {
             <div className='Blog__Content__Footer'>
               <div className='Blog__News__Title'>Tin mới nhất</div>
               <div className='Blog__News__List'>
-                <span className='Blog__News__Item'>
-                  <img className='Blog__News__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__News__Desc'>Pathway to the Mediterranean</p>
-                  <button className='Blog__News__Button'>Design</button>
-                </span>
-                <span className='Blog__News__Item'>
-                  <img className='Blog__News__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__News__Desc'>Pathway to the Mediterranean</p>
-                  <button className='Blog__News__Button'>Design</button>
-                </span>
-                <span className='Blog__News__Item'>
-                  <img className='Blog__News__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__News__Desc'>Pathway to the Mediterranean</p>
-                  <button className='Blog__News__Button'>Design</button>
-                </span>
+                {
+                  postsListTitle?.map((pos, index) => index < 3 && (
+                    <span key={index} className='Blog__News__Item'>
+                      <img className='Blog__News__Img' src={pos.image} alt='BlogImg2'></img>
+                      <p className='Blog__News__Desc'>{pos.title}</p>
+                      {
+                        pos.label[title].map((p, index) => (
+                          <button key={index} className='Blog__News__Button'>{p}</button>
+                        ))
+                      }
+                    </span>
+                  ))
+                }
               </div>
             </div>
           </div>
@@ -112,49 +204,27 @@ function Blog() {
             <div className='Blog__Topic'>
               <div className='Blog__Topic__Title'>Cùng chủ đề</div>
               <ul className='Blog__Topic__List'>
-                <li className='Blog__Topic__Item'>
-                  <img className='Blog__Topic__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__Topic__Desc'>Pathway to the Mediterranean</p>
-                </li>
-                <li className='Blog__Topic__Item'>
-                  <img className='Blog__Topic__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__Topic__Desc'>Pathway to the Mediterranean</p>
-                </li>
-                <li className='Blog__Topic__Item'>
-                  <img className='Blog__Topic__Img' src={BlogImg2} alt='BlogImg2'></img>
-                  <p className='Blog__Topic__Desc'>Pathway to the Mediterranean</p>
-                </li>
+                {
+                  postsListLabel?.map((pos, index) => index < 3 && (
+                    <li className='Blog__Topic__Item'>
+                      <img className='Blog__Topic__Img' src={pos.image} alt='BlogImg2'></img>
+                      <p className='Blog__Topic__Desc'>{pos.title}</p>
+                    </li>
+                  ))
+                }
               </ul>
             </div>
             <div className='Blog__Tags'>
               <div className='Blog__Tags__Title'>Tags</div>
               <div className='Blog__Tags__List'>
                   <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Affordable</span>
+                    <span className='Blog__Tags__Text'>#{title.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/\s/g, '').toLowerCase()}</span>
                   </button>
                   <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Europe</span>
+                    <span className='Blog__Tags__Text'>#{lab}</span>
                   </button>
                   <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Most visitted</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Luxury</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Activity</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Swimming</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Best food</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Trending</span>
-                  </button>
-                  <button className='Blog__Tags__Button'>
-                    <span className='Blog__Tags__Text'>Asia</span>
+                    <span className='Blog__Tags__Text'>#{post?.title.slice(0,10).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').replace(/\s/g, '').toLowerCase()}</span>
                   </button>
               </div>
             </div>

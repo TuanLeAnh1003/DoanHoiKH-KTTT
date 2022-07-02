@@ -1,15 +1,13 @@
 import mongoose from 'mongoose'
 
 const schema = new mongoose.Schema({
-  postId: {
+  title: {
     type: String,
     required: true
   },
-  title: {
-    type: String,
-  },
   label: {
-    type: Array,
+    type: Object,
+    required: true
   },
   content: {
     type: String,
@@ -20,6 +18,6 @@ const schema = new mongoose.Schema({
   linkPost: {
     type: String,
   }
-}, { timestamp: true, collection: 'posts' })
+}, { timestamps: true, collection: 'posts' })
 
 export const PostModel = mongoose.model('Post', schema)

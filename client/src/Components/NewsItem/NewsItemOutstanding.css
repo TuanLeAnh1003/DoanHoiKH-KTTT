@@ -1,16 +1,30 @@
-.news-item-outstanding > div > div {
-  width: 140px;
-height: 20px;
-font-weight: 300;
-font-size: 12px;
-text-align: center;
-background-color: #88D6A3;
-color: #fff;
-text-transform: uppercase;
-border-radius: 10px;
-display: flex;
-align-items: center;
-justify-content: center;
+.news-item-outstanding-label-wrapper {
+  width: fit-content;
+}
+
+.news-item-outstanding-label {
+  width: fit-content;
+  padding: 1px 10px;
+  font-weight: 300;
+  font-size: 10.8px;
+  text-align: center;
+  background-color: #88D6A3;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 10px;
+  /* display: flex; */
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+.news-item-outstanding {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.news-item-outstanding:hover {
+  opacity: 0.8;
 }
 
 .news-item-outstanding > div {
@@ -20,4 +34,9 @@ justify-content: center;
 .news-item-outstanding > div > p {
   font-weight: bold;
   margin-top: 10px;
+  color: #000;
+}
+
+.news-item-outstanding > img {
+  max-width: 176px;
 }

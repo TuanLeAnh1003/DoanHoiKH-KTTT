@@ -10,19 +10,19 @@ function ViewMore({ title, subTitle }) {
   
   const titleList = [
     {
-      title: "GIỚI THIỆU"
+      title: "Giới thiệu"
     },
     {
-      title: "HOẠT ĐỘNG"
+      title: "Hoạt động"
     },
     {
-      title: "TIN TỨC"
+      title: "Tin tức"
     },
     {
-      title: "HỖ TRỢ"
+      title: "Hỗ trợ"
     },
     {
-      title: "HỌC TẬP"
+      title: "Học tập"
     },
   ]
 

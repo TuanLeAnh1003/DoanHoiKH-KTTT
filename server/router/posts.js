@@ -1,8 +1,16 @@
 import express from 'express';
-import { getPosts } from '../controllers/posts.js'
+import { getPosts, getPostById, createPost, getPostsByTitle, getPostsByLabel } from '../controllers/posts.js'
 
 const router = express.Router();
 
 router.get('/', getPosts);
+
+router.get('/:postId', getPostById);
+
+router.post('/', createPost)
+
+router.post('/getPostsByTitle', getPostsByTitle)
+
+router.post('/getPostsByLabel', getPostsByLabel)
 
 export default router;

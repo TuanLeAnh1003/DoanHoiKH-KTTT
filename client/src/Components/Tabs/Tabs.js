@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Tab from './Tab';
 import './Tabs.css'
+import PostApi from '../../Apis/PostApi';
 
 class Tabs extends Component {
     static propTypes = {
@@ -18,6 +19,28 @@ class Tabs extends Component {
 
     onClickTabItem = (tab) => {
         this.setState({ activeTab: tab });
+        switch (tab) {
+            case 'Tất cả':
+                PostApi.getPostsByTitle({
+                    title: this.props.title
+                })
+                .then((res) => {
+                    console.log(res);
+                    this.props.setPostsList(res)
+                })
+                break;
+            case tab:
+                PostApi.getPostsByLabel({
+                    label: tab
+                })
+                .then(res => {
+                    console.log(res);
+                    this.props.setPostsList(res)
+                })
+                break;
+            default:
+                break;
+        }
     }
 
     render() {
@@ -35,7 +58,7 @@ class Tabs extends Component {
             <div className="tabs">
             <ol className="tab-list">
                 {children.map((child) => {
-                const { label } = child.props;
+                const { label } = child.props ? child.props : '';
     
                 return (
                     <Tab
@@ -49,7 +72,7 @@ class Tabs extends Component {
             </ol>
             <div className="tab-content">
                 {children.map((child) => {
-                if (child.props.label !== activeTab) return undefined;
+                if (child.props?.label !== activeTab) return undefined;
                 return child.props.children;
                 })}
             </div>

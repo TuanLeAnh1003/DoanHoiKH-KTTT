@@ -153,10 +153,15 @@
   }
 
   .layoutright a {
-    color: orangered;
+    color: orangered !important;
     text-decoration: none;
     float: right;
     padding-right: 19%;
+    cursor: pointer;
+  }
+
+  .layoutright a:hover {
+    text-decoration: underline !important;
   }
 
   .col-md-4 h2 {

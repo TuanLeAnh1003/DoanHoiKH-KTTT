@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Home.css'
 import { Container, Carousel, Row, Col } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.css";
@@ -11,50 +11,36 @@ import NewsItemImg from '../../../Assets/Images/news-item.png'
 import VideoDoanHoi from '../../../Assets/Videos/video-doan-hoi.mp4'
 import LikeAndShare from '../../../Components/SocialPlugin/LikeAndShare';
 import { FacebookProvider, Like, Group, LikeLayout, LikeAction, Page, Share, ShareButton, EmbeddedPost, Login, Comments, Feed } from 'react-facebook';
+import PostApi from '../../../Apis/PostApi';
 
 
 function Home() {
+  const [postsList, setPostsList] = useState()
+
   const titleList = [
     {
-      title: "GIỚI THIỆU"
+      title: "Giới thiệu"
     },
     {
-      title: "HOẠT ĐỘNG"
+      title: "Hoạt động"
     },
     {
-      title: "TIN TỨC"
+      title: "Tin tức"
     },
     {
-      title: "HỖ TRỢ"
+      title: "Hỗ trợ"
     },
     {
-      title: "HỌC TẬP"
+      title: "Học tập"
     },
   ]
 
-  const newsList = [
-    {
-      image: NewsItemImg,
-      title: "The Gorgeous Statues of Thailand",
-      label: "Bản tin Đoàn - Hội",
-      date: "01/05/2022"
-    },
-    {
-      image: NewsItemImg,
-      title: "The Gorgeous Statues of Thailand",
-      label: "Tin công nghệ"
-    },
-    {
-      image: NewsItemImg,
-      title: "The Gorgeous Statues of Thailand",
-      label: "HĐ sắp diễn ra"
-    },
-    {
-      image: NewsItemImg,
-      title: "The Gorgeous Statues of Thailand",
-      label: "Nghiên cứu khoa học"
-    }
-  ]
+  useEffect(() => {
+    PostApi.getAllPosts()
+    .then(res => {
+      setPostsList(res)
+    })
+  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -108,7 +94,7 @@ function Home() {
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-
+      
       <FacebookProvider appId={process.env.REACT_APP_FACEBOOK_APP_ID}>
         <Share href="https://www.facebook.com/UIT.ISE/posts/2148508611981543">
           {({ handleClick, loading }) => (
@@ -156,14 +142,24 @@ function Home() {
       />
 
       {
-        titleList.map((item, index) => (
-          <NewsItem
-            key={index}
-            title={item.title}
-            index={index}
-            newsList={newsList}
-          />
-        ))
+        titleList.map((item, index) => {
+          const list = []
+
+          postsList?.map((post, ind) => {
+            if (post.label[item.title] !== undefined) {
+              list.push(post)
+            }
+          })
+          
+          return (
+            postsList && 
+            <NewsItem
+              key={index}
+              title={item.title}
+              index={index}
+              postsList={list}
+            />)
+        })
       }
 
       <video width="80%" controls >

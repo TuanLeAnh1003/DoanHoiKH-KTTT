@@ -36,7 +36,7 @@
 .livenews_activity {
     max-width: 100%;
     height: 500px;
-    background-image: url("../../../Assets/Images/news.jpg");
+    /* background-image: url("../../../Assets/Images/news.jpg"); */
     background-size: 100% 100%;
     opacity: 100%;
     margin-bottom: 5%;

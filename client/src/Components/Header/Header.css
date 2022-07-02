@@ -133,6 +133,7 @@
 
 .header__brand svg {
   font-size: 20px;
+  color: rgba(8, 136, 186, 0.8);
 }
 
 .header__link {

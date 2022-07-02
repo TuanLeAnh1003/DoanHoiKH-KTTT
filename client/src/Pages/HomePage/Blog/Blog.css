@@ -29,10 +29,9 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     padding: 0;
-    width: 1140px;
-    height: 2607px;
+    max-width: 1140px;
 }
 
 .Blog__Content__Header {
@@ -43,11 +42,8 @@
 
 .Blog__Label {
     display: flex;
-    width: 172px;
+    width: fit-content;
     height: 24px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
     padding: 2px 16px;
     background: #88D6A3;
     border-radius: 100px;
@@ -55,7 +51,6 @@
 }
 
 .Blog__Label__Name {
-    width: 140px;
     height: 20px;
     font-family: 'Inter';
     font-style: normal;
@@ -400,7 +395,6 @@
     justify-content: center;
     align-items: center;
     padding: 2px 16px;
-    width: 85px;
     height: 24px;
     background: #88D6A3;
     border: 0;
@@ -427,7 +421,6 @@
     padding: 0px;
     gap: 23px;
     width: 300px;
-    height: 1275.41px;
     flex: none;
     order: 1;
     flex-grow: 0;
@@ -579,11 +572,11 @@
 
 .Blog__Tags {
     width: 300px;
-    height: 250px;
     flex: none;
     order: 2;
     flex-grow: 0;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    padding-bottom: 30px;
 }
 
 .Blog__Tags__Title {

@@ -9,7 +9,7 @@
   justify-content: flex-end;
 }
 
-.view-more-item div {
+.view-more-item div a {
   width: 200px;
   height: 30px;
   margin: 0 auto;
@@ -25,4 +25,5 @@
   justify-content: center;
   margin-bottom: 20px;
   color: #fff;
+  text-transform: uppercase;
 }
