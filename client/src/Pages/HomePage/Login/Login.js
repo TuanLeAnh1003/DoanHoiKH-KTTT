@@ -78,8 +78,14 @@ function Login() {
     auth.signInWithPopup(fbProvider)
   }
 
+  const handleClickEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin()
+    }
+  }
+
   return (
-    <section className="fullbody">
+    <section className="fullbody" onKeyPress={(e) => handleClickEnter(e)}>
           <div className="px-4 py-5 px-md-5 text-center text-lg-start">
             <div className="container">
               <div className="row gx-lg-5 align-items-center">

@@ -71,9 +71,6 @@ function Blog({title}) {
     case "tai-lieu":
       label = "Kho tài liệu";
       break;
-    case "lien-he":
-      label = "Thông tin liên hệ";
-      break;
     case "nghien-cuu":
       label = "Nghiên cứu khoa học cùng ISE";
       break;

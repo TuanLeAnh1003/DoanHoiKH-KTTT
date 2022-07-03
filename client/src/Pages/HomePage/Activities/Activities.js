@@ -21,7 +21,7 @@ function Activities({ title }) {
   if (title) {
     switch (title) {
       case "Giới thiệu":
-        labelList = ["Đoàn - Hội KH&KTTT", "Cơ cấu nhân sự", "Thông tin liên hệ", "Danh hiệu SV5T - TNTT"]
+        labelList = ["Đoàn - Hội KH&KTTT", "Cơ cấu nhân sự", "Danh hiệu SV5T - TNTT"]
         break;
       case "Hoạt động":
         labelList = ["Bản tin Đoàn - Hội", "Hoạt động đang diễn ra", "Hoạt động sắp diễn ra", "Các cuộc thi của Đoàn Thanh niên", "Hoạt động tại UIT"]
@@ -41,18 +41,13 @@ function Activities({ title }) {
   }
 
   useEffect(() => {
-    for (let label of labelList) {
-      PostApi.getPostsByLabel({
-        title: title,
-        label: label
-      })
-      .then((res) => {
-        if (res) {
-          setArrayOfPostsByLabel(rest => [...rest, res[0]])
-        }
-      })
-    }
-  }, [])
+    PostApi.getEnoughPostsByTitle({
+      title: title
+    })
+    .then((res) => {
+      setArrayOfPostsByLabel(res);
+    })
+  }, [title])
 
   useEffect(() => {
     PostApi.getPostsByTitle({
@@ -60,10 +55,7 @@ function Activities({ title }) {
     })
     .then((res) => {
       setPostsList(res);
-      console.log(res);
     })
-
-    console.log(postsList);
   }, [title])
 
   const handleClickViewMore = (data) => {
@@ -159,21 +151,21 @@ function Activities({ title }) {
       <div className='tabcontent'>
         <Tabs title={title} setPostsList={setPostsList} postsList={postsList}>
           <div label='Tất cả'>
-            <div className='livenews'>
+            <div className='livenews' style={{ backgroundImage: postsList &&  `url('${postsList[0]?.image}')`}}>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
                     <div className='layoutleft'>
-                      <p>{postsList && postsList[0].label[title]}</p>
-                      <h2>{postsList && postsList[0].title}</h2>
+                      <p>{postsList && postsList[0]?.label[title]}</p>
+                      <h2>{postsList && postsList[0]?.title}</h2>
                     </div>
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
                       <p>
-                      {postsList && postsList[0].title}
+                      {postsList && postsList[0]?.title}
                       </p>
-                      <a onClick={() => handleClickViewMore(postsList[0].label[title][0])}>Xem thêm </a>
+                      <a onClick={() => handleClickViewMore(postsList[0]?.label[title][0])}>Xem thêm </a>
                     </div>
                   </div>
                 </div>
@@ -182,7 +174,7 @@ function Activities({ title }) {
           </div>
           
           <div label={labelList[0]}>
-            <div className='livenews'>
+            <div className='livenews' style={{ backgroundImage: `url('${arrayOfPostsByLabel[0]?.image}')`}}>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
@@ -204,7 +196,7 @@ function Activities({ title }) {
             </div>
           </div>
           <div label={labelList[1]}>
-            <div className='livenews'>
+            <div className='livenews' style={{ backgroundImage: `url('${arrayOfPostsByLabel[1]?.image}')`}}>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>
@@ -226,51 +218,64 @@ function Activities({ title }) {
             </div>
           </div>
           <div label={labelList[2]}>
-            <div className='livenews'>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='layoutleft'>
-                      <p>{labelList[2]}</p>
-                      <h2>{arrayOfPostsByLabel[2]?.title}</h2>
-                    </div>
-                  </div>
-                  <div className='col-md-6'>
-                    <div className='layoutright'>
-                      <p>
-                        {arrayOfPostsByLabel[2]?.content}
-                      </p>
-                      <a href='#'>Xem thêm </a>
+            {
+              arrayOfPostsByLabel[2] !== undefined ? (
+                <div className='livenews' style={{ backgroundImage: `url('${arrayOfPostsByLabel[2]?.image}')`}}>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-6'>
+                        <div className='layoutleft'>
+                          <p>{labelList[2]}</p>
+                          <h2>{arrayOfPostsByLabel[2]?.title}</h2>
+                        </div>
+                      </div>
+                      <div className='col-md-6'>
+                        <div className='layoutright'>
+                          <p>
+                            {arrayOfPostsByLabel[2]?.content}
+                          </p>
+                          <a href='#'>Xem thêm </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              ) : (
+                <h3>Chưa có bài viết nào</h3>
+              )
+            }
           </div>
+          
           <div label={labelList[3]}>
-            <div className='livenews'>
-              <div className='container'>
-                <div className='row'>
-                  <div className='col-md-6'>
-                    <div className='layoutleft'>
-                      <p>{labelList[3]}</p>
-                      <h2>{arrayOfPostsByLabel[3]?.title}</h2>
-                    </div>
-                  </div>
-                  <div className='col-md-6'>
-                    <div className='layoutright'>
-                      <p>
-                        {arrayOfPostsByLabel[3]?.content}
-                      </p>
-                      <a href='#'>Xem thêm </a>
+            {
+              arrayOfPostsByLabel[3] !== undefined ? (
+                <div className='livenews' style={{ backgroundImage: `url('${arrayOfPostsByLabel[3]?.image}')`}}>
+                  <div className='container'>
+                    <div className='row'>
+                      <div className='col-md-6'>
+                        <div className='layoutleft'>
+                          <p>{labelList[3]}</p>
+                          <h2>{arrayOfPostsByLabel[3]?.title}</h2>
+                        </div>
+                      </div>
+                      <div className='col-md-6'>
+                        <div className='layoutright'>
+                          <p>
+                            {arrayOfPostsByLabel[3]?.content}
+                          </p>
+                          <a href='#'>Xem thêm </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              ) : (
+                <h3>Chưa có bài viết nào</h3>
+              )
+            }
           </div>
           {/* <div label={labelList[4]}>
-            <div className='livenews'>
+            <div className='livenews' style={{ backgroundImage: `url('${postsList[0]?.image}')`}}>
               <div className='container'>
                 <div className='row'>
                   <div className='col-md-6'>

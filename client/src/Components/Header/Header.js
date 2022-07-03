@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom'
 
 function Header({currentUser, setCurrentUser}) {
   const [clickSearch, setClickSearch] = useState(false)
+  const [inputSearch, setInputSearch] = useState()
 
   const navigate = useNavigate()
 
@@ -38,7 +39,12 @@ function Header({currentUser, setCurrentUser}) {
       console.log("Logout success");
     })
     setCurrentUser({})
-  } 
+  }
+
+  const handleClickSearch = () => {
+    console.log(inputSearch);
+  }
+
   return (
     <div className="header">
       <Container className="header__top">
@@ -109,7 +115,6 @@ function Header({currentUser, setCurrentUser}) {
                 <NavDropdown.Divider />
                 <Link className="header__link" to='hoc-tap/cuoc-thi'>Cuộc thi học thuật</Link>
                 <Link className="header__link" to='hoc-tap/tai-lieu'>Kho tài liệu</Link>
-                <Link className="header__link" to='hoc-tap/lien-he'>Thông tin liên hệ</Link>
                 <Link className="header__link" to='hoc-tap/nghien-cuu'>Nghiên cứu khoa học cùng ISE</Link>
               </NavDropdown>
             </Nav>
@@ -119,8 +124,8 @@ function Header({currentUser, setCurrentUser}) {
                   <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={() => setClickSearch(true)} />
                 ) : (
                   <div className="header__navbar-search-wrap">
-                    <input type="text" />
-                    <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={() => setClickSearch(true)} />
+                    <input type="text" onChange={e => setInputSearch(e.target.value)}/>
+                    <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={handleClickSearch} />
                   </div>
                 )
               }

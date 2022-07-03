@@ -7,12 +7,10 @@ import CarouselLabel from '../../../Components/CarouselLabel/CarouselLabel';
 import HomeImage1 from '../../../Assets/Images/home-image-1.png'
 import ViewMore from '../../../Components/ViewMore/ViewMore';
 import NewsItem from '../../../Components/NewsItem/NewsItem';
-import NewsItemImg from '../../../Assets/Images/news-item.png'
 import VideoDoanHoi from '../../../Assets/Videos/video-doan-hoi.mp4'
 import LikeAndShare from '../../../Components/SocialPlugin/LikeAndShare';
 import { FacebookProvider, Like, Group, LikeLayout, LikeAction, Page, Share, ShareButton, EmbeddedPost, Login, Comments, Feed } from 'react-facebook';
 import PostApi from '../../../Apis/PostApi';
-
 
 function Home() {
   const [postsList, setPostsList] = useState()
@@ -116,6 +114,8 @@ function Home() {
           skin="light"
         />
       </FacebookProvider>
+
+      
 
       <Container>
         <Row className="home__container-row1">
