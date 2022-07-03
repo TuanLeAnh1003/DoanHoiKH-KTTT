@@ -25,7 +25,6 @@ class Tabs extends Component {
                     title: this.props.title
                 })
                 .then((res) => {
-                    console.log(res);
                     this.props.setPostsList(res)
                 })
                 break;

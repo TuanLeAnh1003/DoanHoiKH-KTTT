@@ -12,6 +12,10 @@ const getPostsByTitle = async (data) => {
   return await axiosInstance.post('/posts/getPostsByTitle', data)
 }
 
+const getEnoughPostsByTitle = async (data) => {
+  return await axiosInstance.post('/posts/getEnoughPostsByTitle', data)
+}
+
 const getPostsByLabel = async (data) => {
   return await axiosInstance.post('/posts/getPostsByLabel', data)
 }
@@ -20,5 +24,6 @@ export default {
   getAllPosts,
   getPostById,
   getPostsByTitle,
+  getEnoughPostsByTitle,
   getPostsByLabel
 }
