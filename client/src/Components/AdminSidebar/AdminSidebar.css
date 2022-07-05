@@ -1,0 +1,73 @@
+.AdminSideBar {
+  text-align: left;
+  margin-top: 30px;
+}
+
+.AdminSideBar__account {
+  display: flex;
+  align-items: center;
+}
+
+.AdminSideBar__account > img {
+  width: 70px;
+  height: 70px;
+}
+
+.AdminSideBar__account > div {
+  margin-left: 20px;
+
+}
+
+.AdminSideBar__account > div > div {
+  display: flex;
+  align-items: center;
+  height: 30px;
+}
+
+.AdminSideBar__account > div > div > svg {
+  color: #88D6A3;
+  margin-left: 5px;
+}
+
+.AdminSideBar__account > div > button {
+  border: none;
+  background-color: transparent;
+  font-weight: 400;
+}
+
+.AdminSideBar__account > div > button:hover {
+  text-decoration: underline !important;
+}
+
+.AdminSideBar__func {
+  margin: 30px 0;
+  line-height: 30px;
+}
+
+.AdminSideBar__func > a {
+  color: #000;
+  padding-left: 13px;
+
+}
+
+.AdminSideBar__func-active {
+  padding-left: 10px !important;
+  border-left: 3px solid #88D6A3;
+}
+
+.AdminSideBar__func > a:hover {
+  text-decoration: underline !important;
+}
+
+.AdminSideBar > button {
+  background-color: #FF7B54;
+  border-radius: 8px;
+  color: #fff;
+  padding: 4px 10px;
+  font-weight: 700;
+  border: none;
+}
+
+.AdminSideBar > button:hover {
+  background-color: #fa8e6d;
+}

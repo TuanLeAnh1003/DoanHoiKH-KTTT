@@ -50,7 +50,9 @@ function Header({currentUser, setCurrentUser}) {
       <Container className="header__top">
         <div className="header__top-wrap">
           <div className="header__top-logo">
-            <img src={logo} alt="logo" />
+            <Link to='/'>
+              <img src={logo} alt="logo" />
+            </Link>
           </div>
           {
             isEmptyObject(currentUser) ? (
