@@ -3,7 +3,7 @@ import BlogPopup from '../../../Components/BlogPopup/BlogPopup'
 import './BlogManagement.css'
 
 function BlogManagement() {
-  const [type, setType] = useState('update')
+  const [type, setType] = useState('create')
 
   return (
     <div className="b-mng">

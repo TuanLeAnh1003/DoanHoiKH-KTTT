@@ -9,7 +9,7 @@ function AdminSidebar({ currentUser }) {
   const [funcActive, setFuncActive] = useState(0)
 
   const AdminFunc = ['Chung', 'Bài đăng', 'Tài khoản', 'Cài đặt']
-  const AdminLink = ['/admin/', '/admin/account-management', '/admin/blog-management', '/admin/setting']
+  const AdminLink = ['/admin/', '/admin/blog-management', '/admin/account-management', '/admin/setting']
 
   return (
     <div className="AdminSideBar">

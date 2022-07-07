@@ -1,4 +1,12 @@
 import { PostModel } from '../models/PostModel.js'
+import { fileURLToPath } from 'url';
+import path from 'path'
+import fs from 'fs'
+import { uploadFile, deleteFile } from '../firebase/util.js'
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 export const getPosts = async (req, res) => {
   try {
@@ -115,4 +123,80 @@ export const getEnoughPostsByTitle = async (req, res) => {
   } catch (err) {
     res.status(500).json(err)
   }
+}
+
+export const uploadImageToFirebase = async (req, res) => {
+  // if(!req.file) {
+  //   return res.status(400).send("Error: No files found")
+  // } 
+
+  // const blob = firebase.bucket.file(req.file.originalname)
+
+  // const blobWriter = blob.createWriteStream({
+  //     metadata: {
+  //         contentType: req.file.mimetype,
+  //     }
+  // })
+
+  // blobWriter.on('error', (err) => {
+  //     console.log(err)
+  // })
+
+  // blobWriter.on('finish', () => {
+  //   console.log(firebase.bucket.methods.get);
+  //   res.status(200).send({blobWriter, firebase})
+  // })
+
+  // blobWriter.end(req.file.buffer)
+  console.log(req.file);
+}
+
+export const uploadImages = async (req, res) => {
+  try {
+    fs.readFile(req.files.upload.path, function (err, data) {
+        // var newPath = __dirname + '/public/images/' + req.files.upload.name;
+        // fs.writeFile(newPath, data, function (err) {
+        //     if (err) console.log({err: err});
+        //     else {
+        //         console.log(req.files.upload.originalFilename);
+        //     //     imgl = '/images/req.files.upload.originalFilename';
+        //     //     let img = "<script>window.parent.CKEDITOR.tools.callFunction('','"+imgl+"','ok');</script>";
+        //     //    res.status(201).send(img);
+             
+        //         let fileName = req.files.upload.name;
+        //         let url = '/images/'+fileName;                    
+        //         let msg = 'Upload successfully';
+        //         let funcNum = req.query.CKEditorFuncNum;
+        //         console.log({url,msg,funcNum});
+               
+        //         res.status(201).send("<script>window.parent.CKEDITOR.tools.callFunction('"+funcNum+"','"+url+"','"+msg+"');</script>");
+        //     }
+        // });
+        console.log(req.files.upload);
+        if(!req.files.upload) {
+    return res.status(400).send("Error: No files found")
+  } 
+
+  const blob = firebase.bucket.file(req.files.upload.originalname)
+
+  const blobWriter = blob.createWriteStream({
+      metadata: {
+          contentType: req.files.upload.mimetype,
+      }
+  })
+
+  blobWriter.on('error', (err) => {
+      console.log(err)
+  })
+
+  blobWriter.on('finish', () => {
+    console.log(firebase.bucket.methods.get);
+    res.status(200).send({blobWriter, firebase})
+  })
+
+  blobWriter.end(req.file.buffer)
+    });
+   } catch (error) {
+       console.log(error.message);
+   }
 }

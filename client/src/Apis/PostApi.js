@@ -20,10 +20,19 @@ const getPostsByLabel = async (data) => {
   return await axiosInstance.post('/posts/getPostsByLabel', data)
 }
 
+const uploadImageToFirebase = async (data) => {
+  return await axiosInstance.post('/posts/upload', data.file, {
+    headers: {
+        "Content-Type": "multipart/form-data"
+    }
+})
+}
+
 export default {
   getAllPosts,
   getPostById,
   getPostsByTitle,
   getEnoughPostsByTitle,
-  getPostsByLabel
+  getPostsByLabel,
+  uploadImageToFirebase
 }
