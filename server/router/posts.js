@@ -3,7 +3,7 @@ import { getPosts, getPostById, createPost, getPostsByTitle, getPostsByLabel, ge
 import multer from 'multer'
 import multiparty from 'connect-multiparty'
 
-const MultipartyMiddleware = multiparty();
+const MultipartyMiddleware = multiparty({uploadDir: './images'});
 
 const upload = multer({
   storage: multer.memoryStorage()
@@ -23,7 +23,7 @@ router.post('/getEnoughPostsByTitle', getEnoughPostsByTitle)
 
 router.post('/getPostsByLabel', getPostsByLabel)
 
-router.post('/upload', uploadImageToFirebase)
+router.post('/upload', upload.single('image'), uploadImageToFirebase)
 
 router.post('/uploads', MultipartyMiddleware, uploadImages)
 

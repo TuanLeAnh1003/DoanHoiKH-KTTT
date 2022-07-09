@@ -20,6 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
 app.use(cors());
 app.use(cookieParser());
 
+app.use(express.static('images'))
+
 app.use('/posts', posts)
 app.use('/users', users)
 app.use('/auth', auth);

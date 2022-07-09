@@ -2,11 +2,12 @@ import { PostModel } from '../models/PostModel.js'
 import { fileURLToPath } from 'url';
 import path from 'path'
 import fs from 'fs'
-import { uploadFile, deleteFile } from '../firebase/util.js'
 
-const __filename = fileURLToPath(import.meta.url);
+import uuid from 'uuid-v4'
+import { bucket } from '../firebase/config.js'
 
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 export const getPosts = async (req, res) => {
   try {
@@ -148,55 +149,91 @@ export const uploadImageToFirebase = async (req, res) => {
   // })
 
   // blobWriter.end(req.file.buffer)
+
+  // const buffer64 = await fs.readFile(req.file.buffer, { encoding: 'base64' }).then((res) => console.log(res))
+
   console.log(req.file);
+
+  // var TempFile = req.files.upload;
+  // var TempPathFile = TempFile.path;
+
+  //   const targetPathUrl = path.join(process.cwd(), "./images/" + TempFile.name)
+  //   if (path.extname(TempFile.originalFilename).toLowerCase() === ".png" || ".jpg") {
+  //       await fs.rename(TempPathFile, targetPathUrl, err => {
+
+          
+    
+  //         if (err) return console.log(err)
+  //       })
+  //     }
+
+  //   const filename = targetPathUrl;
+
+  //   const metadata = {
+  //     metadata: {
+  //       // This line is very important. It's to create a download token.
+  //       firebaseStorageDownloadTokens: uuid()
+  //     },
+  //     contentType: 'image/png',
+  //     cacheControl: 'public, max-age=31536000',
+  //   };
+
+  //   await bucket.upload(filename, {
+  //     // Support for HTTP requests made with `Accept-Encoding: gzip`
+  //     gzip: true,
+  //     metadata: metadata,
+  //   });
+
+  //   res.status(200).json({
+  //     uploaded: true,
+  //     url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalFilename}?alt=media\&token=${metadata.metadata.firebaseStorageDownloadTokens}`
+  //   })
+    
+  //   await fs.unlink(filename, function (err) {
+  //     if (err) {
+  //       console.error(err);
+  //     } else {
+  //       console.log("File removed:", filename);
+  //     }
+  //   });
 }
 
 export const uploadImages = async (req, res) => {
-  try {
-    fs.readFile(req.files.upload.path, function (err, data) {
-        // var newPath = __dirname + '/public/images/' + req.files.upload.name;
-        // fs.writeFile(newPath, data, function (err) {
-        //     if (err) console.log({err: err});
-        //     else {
-        //         console.log(req.files.upload.originalFilename);
-        //     //     imgl = '/images/req.files.upload.originalFilename';
-        //     //     let img = "<script>window.parent.CKEDITOR.tools.callFunction('','"+imgl+"','ok');</script>";
-        //     //    res.status(201).send(img);
-             
-        //         let fileName = req.files.upload.name;
-        //         let url = '/images/'+fileName;                    
-        //         let msg = 'Upload successfully';
-        //         let funcNum = req.query.CKEditorFuncNum;
-        //         console.log({url,msg,funcNum});
-               
-        //         res.status(201).send("<script>window.parent.CKEDITOR.tools.callFunction('"+funcNum+"','"+url+"','"+msg+"');</script>");
-        //     }
-        // });
-        console.log(req.files.upload);
-        if(!req.files.upload) {
-    return res.status(400).send("Error: No files found")
-  } 
+  var TempFile = req.files.upload;
+  var TempPathFile = TempFile.path;
 
-  const blob = firebase.bucket.file(req.files.upload.originalname)
-
-  const blobWriter = blob.createWriteStream({
-      metadata: {
-          contentType: req.files.upload.mimetype,
+    const targetPathUrl = path.join(process.cwd(), "./images/" + TempFile.name)
+    if (path.extname(TempFile.originalFilename).toLowerCase() === ".png" || ".jpg") {
+        await fs.rename(TempPathFile, targetPathUrl, err => {
+          if (err) return console.log(err)
+        })
       }
-  })
 
-  blobWriter.on('error', (err) => {
-      console.log(err)
-  })
+    const filename = targetPathUrl;
 
-  blobWriter.on('finish', () => {
-    console.log(firebase.bucket.methods.get);
-    res.status(200).send({blobWriter, firebase})
-  })
+    const metadata = {
+      metadata: {
+        firebaseStorageDownloadTokens: uuid()
+      },
+      contentType: 'image/png',
+      cacheControl: 'public, max-age=31536000',
+    };
 
-  blobWriter.end(req.file.buffer)
+    await bucket.upload(filename, {
+      gzip: true,
+      metadata: metadata,
     });
-   } catch (error) {
-       console.log(error.message);
-   }
+
+    res.status(200).json({
+      uploaded: true,
+      url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalFilename}?alt=media\&token=${metadata.metadata.firebaseStorageDownloadTokens}`
+    })
+    
+    await fs.unlink(filename, function (err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log("File removed:", filename);
+      }
+    });
 }

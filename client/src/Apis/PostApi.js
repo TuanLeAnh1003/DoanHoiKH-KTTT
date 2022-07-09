@@ -21,11 +21,12 @@ const getPostsByLabel = async (data) => {
 }
 
 const uploadImageToFirebase = async (data) => {
-  return await axiosInstance.post('/posts/upload', data.file, {
+  console.log(data.image);
+  return await axiosInstance.post('/posts/upload', data.image, {
     headers: {
-        "Content-Type": "multipart/form-data"
+      'Content-Type': 'multipart/form-data'
     }
-})
+  })
 }
 
 export default {

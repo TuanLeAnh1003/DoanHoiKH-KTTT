@@ -4,7 +4,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { Link } from 'react-router-dom';
 import PostApi from '../../Apis/PostApi';
-import { uploadFile, deleteFile } from '../../firebase/util'
+// import { uploadFile, deleteFile } from '../../firebase/util'
 
 function BlogPopup({ type }) {
   const [thumbnail, setThumbnail] = useState();
@@ -30,10 +30,9 @@ function BlogPopup({ type }) {
 
   const handleCreatePost = async () => {
     const formData = new FormData();
-    await formData.append('file', thumbnail); // thumbnail là state chứa file ảnh cần upload
-
+    await formData.append('image', thumbnail); // thumbnail là state chứa file ảnh cần upload
     PostApi.uploadImageToFirebase({
-      file: formData,
+      image: formData,
     }).then((res) => {
       console.log(res);
     });
