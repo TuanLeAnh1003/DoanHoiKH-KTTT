@@ -146,8 +146,10 @@ function Home() {
           const list = []
 
           postsList?.map((post, ind) => {
-            if (post.label[item.title] !== undefined) {
-              list.push(post)
+            if (post.label) {
+              if (post?.label[item.title] !== undefined) {
+                list.push(post)
+              }
             }
           })
           

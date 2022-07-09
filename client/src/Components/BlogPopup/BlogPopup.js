@@ -8,55 +8,119 @@ import PostApi from '../../Apis/PostApi';
 
 function BlogPopup({ type }) {
   const [thumbnail, setThumbnail] = useState();
-  const [thumbnailUrl, setThumbnailUrl] = useState();
+  const [title, setTitle] = useState();
+  const [labelSelected, setLabelSelected] = useState([])
+  const [linkPost, setLinkPost] = useState()
+  const [content, setContent] = useState()
 
-  const id = useId();
+  const randomId = useId();
 
   const labelList = [
-    'Đoàn - Hội KH&KTTT',
-    'Cơ cấu nhân sự',
-    'Danh hiệu SV5T - TNTT',
-    'Bản tin Đoàn - Hội',
-    'Tin công nghệ',
+    'Đoàn - Hội KH&KTTT', 'Cơ cấu nhân sự', 'Danh hiệu SV5T - TNTT',
+    'Bản tin Đoàn - Hội',"Hoạt động đang diễn ra", "Hoạt động sắp diễn ra", "Các cuộc thi của Đoàn Thanh niên", "Hoạt động tại UIT",
+    "Thông báo", "Tin công nghệ", "Sinh viên tiêu biểu", "Những câu chuyện đẹp tại ISE",
+    "Quy trình - văn bản", "Học bổng", "Việc làm - Thực tập", "Khác",
+    "Cuộc thi học thuật", "Kho tài liệu", "Nghiên cứu khoa học cùng ISE"
   ];
 
   const handleClickLabel = (e) => {
-    const activeLabel = document.querySelector('.b-popup__label-active');
+    console.log(labelSelected, e.target.getAttribute('value'));
+    if(labelSelected.includes(e.target.getAttribute('value'))) {
+      e.target.classList.remove('b-popup__label-active');
 
-    if (activeLabel !== null) activeLabel.classList.remove('b-popup__label-active');
+      const temp = labelSelected.filter((label, index) => {
+        return label !== e.target.getAttribute('value')
+      })
 
-    e.classList.add('b-popup__label-active');
+      setLabelSelected(temp)
+    } else {
+      e.target.classList.add('b-popup__label-active');
+
+      const temp = labelSelected
+
+      temp.push(e.target.getAttribute('value'))
+
+      setLabelSelected(temp)
+    }
   };
+
+  const handleLabelList = (list) => {
+    let ojectTemp = {
+      'Giới thiệu': [],
+      'Hoạt động': [],
+      'Tin tức': [],
+      'Hỗ trợ': [],
+      'Học tập': [],
+    }
+    const arrayTemp = ['Giới thiệu', 'Hoạt động', 'Tin tức', 'Hỗ trợ', 'Học tập']
+
+    const list1 = ["Đoàn - Hội KH&KTTT", "Cơ cấu nhân sự", "Danh hiệu SV5T - TNTT"]
+    const list2 = ["Bản tin Đoàn - Hội", "Hoạt động đang diễn ra", "Hoạt động sắp diễn ra", "Các cuộc thi của Đoàn Thanh niên", "Hoạt động tại UIT"]
+    const list3 = ["Thông báo", "Tin công nghệ", "Sinh viên tiêu biểu", "Những câu chuyện đẹp tại ISE"]
+    const list4 = ["Quy trình - văn bản", "Học bổng", "Việc làm - Thực tập", "Khác"]
+    const list5 = ["Cuộc thi học thuật", "Kho tài liệu", "Nghiên cứu khoa học cùng ISE"]
+
+    for (let label of list) {
+      if (list1.includes(label)) {
+        ojectTemp['Giới thiệu'].push(label)
+      }
+      if (list2.includes(label)) {
+        ojectTemp['Hoạt động'].push(label)
+      }
+      if (list3.includes(label)) {
+        ojectTemp['Tin tức'].push(label)
+      }
+      if (list4.includes(label)) {
+        ojectTemp['Hỗ trợ'].push(label)
+      }
+      if (list5.includes(label)) {
+        ojectTemp['Học tập'].push(label)
+      }
+    }
+
+    for (let label of arrayTemp) {
+      if (ojectTemp[label].length === 0) {
+        delete ojectTemp[label]
+      }
+    }
+
+    return ojectTemp;
+  }
+
+  const handleCharacter = (string) => {
+    while (string.indexOf('&amp;') !== -1) {
+      string = string.slice(0, string.indexOf('&amp;') + 1) + string.slice(string.indexOf('&amp;') + 5, string.length)
+    }
+    return string;
+  }
 
   const handleCreatePost = async () => {
-    const formData = new FormData();
-    await formData.append('image', thumbnail); // thumbnail là state chứa file ảnh cần upload
-    PostApi.uploadImageToFirebase({
-      image: formData,
-    }).then((res) => {
-      setThumbnailUrl(res.url);
-      console.log(thumbnailUrl);
-    });
-  };
+    let thumbnailUrl = ''
+      const formData = new FormData();
+      await formData.append('image', thumbnail);
+      await PostApi.uploadImageToFirebase({
+        image: formData,
+      }).then((res) => {
+        thumbnailUrl = res.url;
+        console.log(res.url);
+      });
 
-  // useEffect(() => {
-  //   console.log(thumbnail);
-  //   const storageRef = firebase.storage().ref(`${thumbnail.imageData.name}`).put(thumbnail.imageData);
-  //   storageRef.on(
-  //     `state_changed`,
-  //     (snapshot) => {
-  //       console.log(snapshot);
-  //     },
-  //     (error) => {
-  //       console.log(error.message);
-  //     },
-  //     () => {
-  //       storageRef.snapshot.ref.getDownloadURL().then((url) => {
-  //         console.log(url);
-  //       });
-  //     },
-  //   );
-  // }, []);
+    const objectLabel = await handleLabelList(labelSelected)
+
+    await PostApi.createPost({
+      title: title,
+      image: thumbnailUrl,
+      label: objectLabel,
+      linkPost: linkPost,
+      content: content
+    })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  };
 
   return (
     <>
@@ -67,7 +131,7 @@ function BlogPopup({ type }) {
             Tiêu đề<span style={{ color: 'red' }}>*</span>
           </label>
           <br />
-          <input id="title" type="text" placeholder="Nhập tiêu đề..." />
+          <input id="title" type="text" placeholder="Nhập tiêu đề..." onChange={e => setTitle(e.target.value)}/>
           <br />
           <label htmlFor="thumbnail">Thumbnail</label>
           <br />
@@ -79,11 +143,16 @@ function BlogPopup({ type }) {
           <br />
           <div className="b-popup__label-wrap">
             {labelList.map((label, index) => (
-              <div key={index} className="b-popup__label" value={label} onClick={(e) => handleClickLabel(e.target)}>
+              <div key={index} className="b-popup__label" value={label} onClick={(e) => handleClickLabel(e)}>
                 {label}
               </div>
             ))}
           </div>
+          <br />
+          <label htmlFor="link">Link bài viết</label>
+          <br />
+          <input id="link" type="text" placeholder="Nhập link bài viết nếu có..." onChange={e => setLinkPost(e.target.value)}/>
+          <br />
           <label>Nội dung:</label>
           <br />
           <CKEditor
@@ -97,28 +166,12 @@ function BlogPopup({ type }) {
               }
             }
 
-            onChange = {(event, editor) => {
-              const data = editor.getData();
-              console.log(data)
+            onChange = {async (event, editor) => {
+              const data = await editor.getData();
+              const dataHandled = handleCharacter(data);
+              console.log(dataHandled);
+              setContent(dataHandled)
             }}
-
-            // editor={ ClassicEditor }
-            //         data="<p>Hello from CKEditor 5!</p>"
-            //         onInit={editor => {
-            //           editor.plugins.get("FileRepository").createUploadAdapter = loader => {
-            //             return new MyUploadAdapter(loader);
-            //           };
-            //         }}
-            //         onChange={ ( event, editor ) => {
-            //             const data = editor.getData();
-            //             console.log( { event, editor, data } );
-            //         } }
-            //         onBlur={ ( event, editor ) => {
-            //             console.log( 'Blur.', editor );
-            //         } }
-            //         onFocus={ ( event, editor ) => {
-            //             console.log( 'Focus.', editor );
-            //         } }
           />
           <p>Xem trước bài đăng</p>
           <div className="b-popup__button">

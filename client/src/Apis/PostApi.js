@@ -29,11 +29,16 @@ const uploadImageToFirebase = async (data) => {
   })
 }
 
+const createPost = async (data) => {
+  return await axiosInstance.post('/posts', data)
+}
+
 export default {
   getAllPosts,
   getPostById,
   getPostsByTitle,
   getEnoughPostsByTitle,
   getPostsByLabel,
-  uploadImageToFirebase
+  uploadImageToFirebase,
+  createPost
 }

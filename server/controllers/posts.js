@@ -33,19 +33,17 @@ export const getPostById = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const post = new PostModel({
+    const post = await PostModel.create({
       title: req.body.title,
+      image: req.body.image,
       label: req.body.label,
       content: req.body.content,
-      image: req.body.image,
-      linkPost: req.body.linkPost
+      linkPost: req.body.linkPost ? req.body.linkPost : '',
     })
-
-    post.save()
 
     res.status(200).json(post)
   } catch (err) {
-    console.log(err);
+    res.status(500).json(err)
   }
 }
 
@@ -139,7 +137,7 @@ export const uploadImageToFirebase = async (req, res) => {
         })
       }
 
-    const filename = targetPathUrl;
+    const filename = await targetPathUrl;
 
     const metadata = {
       metadata: {
@@ -149,23 +147,27 @@ export const uploadImageToFirebase = async (req, res) => {
       cacheControl: 'public, max-age=31536000',
     };
 
-    await bucket.upload(filename, {
-      gzip: true,
-      metadata: metadata,
-    });
+    try {
+      await bucket.upload(filename, {
+        gzip: true,
+        metadata: metadata,
+      });
+      await res.status(200).json({
+        uploaded: true,
+        url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalname}?alt=media\&token=${metadata.metadata.firebaseStorageDownloadTokens}`
+      })
+      
+      fs.unlink(filename, function (err) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log("File removed:", filename);
+        }
+      });
+    } catch (err) {
+      console.log('upload error', err);
+    }
 
-    res.status(200).json({
-      uploaded: true,
-      url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalname}?alt=media\&token=${metadata.metadata.firebaseStorageDownloadTokens}`
-    })
-    
-    await fs.unlink(filename, function (err) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File removed:", filename);
-      }
-    });
 }
 
 export const uploadImages = async (req, res) => {
@@ -189,21 +191,25 @@ export const uploadImages = async (req, res) => {
       cacheControl: 'public, max-age=31536000',
     };
 
-    await bucket.upload(filename, {
-      gzip: true,
-      metadata: metadata,
-    });
+    try {
+      await bucket.upload(filename, {
+        gzip: true,
+        metadata: metadata,
+      });
+      await res.status(200).json({
+        uploaded: true,
+        url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalFilename}?alt=media&token=${metadata.metadata.firebaseStorageDownloadTokens}`
+      })
 
-    res.status(200).json({
-      uploaded: true,
-      url: `https://firebasestorage.googleapis.com/v0/b/doanhoikhkttt.appspot.com/o/${TempFile.originalFilename}?alt=media\&token=${metadata.metadata.firebaseStorageDownloadTokens}`
-    })
-    
-    await fs.unlink(filename, function (err) {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log("File removed:", filename);
-      }
-    });
+        fs.unlink(filename, function (err) {
+          if (err) {
+            console.error(err);
+          } else {
+            console.log("File removed:", filename);
+          }
+        });
+    } catch (err) {
+      console.log('upload err', err);
+    }
+
 }

@@ -5,15 +5,18 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    required: true
+  },
   label: {
     type: Object,
     required: true
   },
   content: {
     type: String,
-  },
-  image: {
-    type: String,
+    required: true
+
   },
   linkPost: {
     type: String,
