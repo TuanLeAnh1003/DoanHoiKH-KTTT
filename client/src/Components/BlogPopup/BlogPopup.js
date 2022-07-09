@@ -34,7 +34,8 @@ function BlogPopup({ type }) {
     PostApi.uploadImageToFirebase({
       image: formData,
     }).then((res) => {
-      console.log(res);
+      setThumbnailUrl(res.url);
+      console.log(thumbnailUrl);
     });
   };
 

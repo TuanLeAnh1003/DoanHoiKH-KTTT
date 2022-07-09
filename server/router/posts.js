@@ -5,9 +5,11 @@ import multiparty from 'connect-multiparty'
 
 const MultipartyMiddleware = multiparty({uploadDir: './images'});
 
-const upload = multer({
-  storage: multer.memoryStorage()
-})
+// const upload = multer({
+//   storage: multer.memoryStorage()
+// })
+
+const upload = multer({ dest: "images/" });
 
 const router = express.Router();
 
