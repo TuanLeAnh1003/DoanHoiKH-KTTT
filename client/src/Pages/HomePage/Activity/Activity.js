@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import './Activity.css'
 import "bootstrap/dist/css/bootstrap.css";
-import NewsItem from '../../../Components/NewsItem/NewsItem';
-import NewsItemImg from '../../../Assets/Images/news-item.png'
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import PostApi from '../../../Apis/PostApi';
 import Thumbnail from '../../../Assets/Images/thumbnail.png';
-import NewsImage2 from '../../../Assets/Images/Image2.png';
-import NewsImage1 from '../../../Assets/Images/Image1.png';
-import NewsImage3 from '../../../Assets/Images/Image3.png';
-import { Link } from 'react-router-dom';
-import PostApi from '../../../Apis/PostApi'
-
-import { useParams, useNavigate } from 'react-router-dom';
+import './Activity.css';
 
 function Activity({ title }) {
   const [postsList, setPostsList] = useState()
@@ -22,7 +15,7 @@ function Activity({ title }) {
   
   switch (lab) {
     case "doan-hoi":
-      label = "Đoàn hội KH&KTTT";
+      label = "Đoàn - Hội KH&KTTT";
       break;
     case "co-cau":
       label = "Cơ cấu nhân sự";
@@ -129,7 +122,7 @@ function Activity({ title }) {
                   </div>
                   <div className='col-md-6'>
                     <div className='layoutright'>
-                      <p>{postsList && postsList[0]?.content}</p>
+                      <p>{postsList && postsList[0]?.subHeader}</p>
                       <a onClick={() => navigate(`./${postsList[0]?._id}`, { replace: true })}>Xem thêm </a>
                     </div>
                   </div>
@@ -161,7 +154,7 @@ function Activity({ title }) {
                               <div className='col-md-6'>
                                 <h4 className='News_Item_Title'>{post.title}</h4>
                                 <p className='News_Item_Time'>{new Date(post.createdAt).toLocaleDateString('pt-PT')}</p>
-                                <p className='News_Item_Description'>{post.content}</p>
+                                <p className='News_Item_Description'>{post.subHeader}</p>
                               </div>
                             </div>
                           </div>
@@ -226,7 +219,7 @@ function Activity({ title }) {
           </>
           
         ) : (
-          <h3 style={{ marginBottom: '50px' }}>Hiện chưa có bài viết nào</h3>
+          <h3 style={{ marginBottom: '50px', textAlign: 'center' }}>Hiện chưa có bài viết nào</h3>
         )
       }
 

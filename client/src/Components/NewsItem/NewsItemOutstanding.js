@@ -1,11 +1,27 @@
-import React, { memo } from 'react'
+import React, { memo, useState, useEffect} from 'react'
 import './NewsItemOutstanding.css'
 import { Link } from 'react-router-dom'
 
 function NewsItemOutstanding({post, title, titleUrl}) {
+  const [arrayLabel, setArrayLabel] = useState([])
+
+  useEffect(() => {
+    let arrayTemp = []
+      if (post) {
+        if (post.label !== undefined) {
+          for (let labelsList of Object.values(post.label)) {
+            for (let label of labelsList) {
+              arrayTemp.push(label);
+            }
+          }
+        }
+      }
+      setArrayLabel(arrayTemp)
+  }, [])
+
   let labelLink = ''
   switch (post.label[title][0]) {
-    case "Đoàn hội KH&KTTT":
+    case "Đoàn - Hội KH&KTTT":
       labelLink = "doan-hoi";
       break;
     case "Cơ cấu nhân sự":
@@ -65,14 +81,13 @@ function NewsItemOutstanding({post, title, titleUrl}) {
     default:
       break;
   }
-  console.log(titleUrl, labelLink);
   return (
       <Link to={`/${titleUrl}/${labelLink}/${post._id}`}>
         <div className="news-item-outstanding">
             <img src={post.image} alt="img" />
             <div className="news-item-outstanding-label-wrapper">
                 {
-                  post.label[title]?.map((label, ind) => (
+                  arrayLabel?.map((label, ind) => (
                     <div key={ind} className="news-item-outstanding-label">
                       {label}
                     </div>

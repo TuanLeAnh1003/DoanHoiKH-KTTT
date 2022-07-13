@@ -1,18 +1,22 @@
-import React, { useId, useState, useEffect } from 'react';
+import React, { useId, useState, useEffect, useMemo } from 'react';
 import './BlogPopup.css';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PostApi from '../../Apis/PostApi';
-// import { uploadFile, deleteFile } from '../../firebase/util'
+import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Swal from "sweetalert2";
 
-function BlogPopup({ type }) {
+function BlogPopup({ type, setType, updatePost, setUpdatePost }) {
   const [thumbnail, setThumbnail] = useState();
   const [title, setTitle] = useState();
+  const [subHeader, setSubHeader] = useState();
   const [labelSelected, setLabelSelected] = useState([])
   const [linkPost, setLinkPost] = useState()
   const [content, setContent] = useState()
 
+  const navigate = useNavigate()
   const randomId = useId();
 
   const labelList = [
@@ -24,7 +28,6 @@ function BlogPopup({ type }) {
   ];
 
   const handleClickLabel = (e) => {
-    console.log(labelSelected, e.target.getAttribute('value'));
     if(labelSelected.includes(e.target.getAttribute('value'))) {
       e.target.classList.remove('b-popup__label-active');
 
@@ -109,6 +112,7 @@ function BlogPopup({ type }) {
 
     await PostApi.createPost({
       title: title,
+      subHeader: subHeader,
       image: thumbnailUrl,
       label: objectLabel,
       linkPost: linkPost,
@@ -116,22 +120,106 @@ function BlogPopup({ type }) {
     })
     .then((res) => {
       console.log(res);
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Tạo bài viết thành công!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      window.location.reload();
     })
     .catch((err) => {
       console.log(err);
     })
   };
 
+  const handleUpdatePost = async () => {
+    let thumbnailUrl = ''
+    if (thumbnail === updatePost.image) {
+      thumbnailUrl = thumbnail
+    } else {
+      const formData = new FormData();
+      await formData.append('image', thumbnail);
+      await PostApi.uploadImageToFirebase({
+        image: formData,
+      }).then((res) => {
+        thumbnailUrl = res.url;
+        console.log(res.url);
+      });
+    }
+
+    const objectLabel = await handleLabelList(labelSelected)
+
+    await PostApi.updatePost({
+      postId: updatePost._id,
+      title: title,
+      subHeader: subHeader,
+      image: thumbnailUrl,
+      label: objectLabel,
+      linkPost: linkPost,
+      content: content
+    }).then((res) => {
+      Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Cập nhật bài viết thành công!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setUpdatePost({})
+      window.location.reload();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
+  useEffect(() => {
+    if (updatePost !== {}) {
+      setTitle(updatePost.title);
+      setSubHeader(updatePost.subHeader);
+      setLinkPost(updatePost.linkPost);
+      setContent(updatePost.content);
+      setThumbnail(updatePost.image)
+
+      let arrayLabel = []
+      if (updatePost.label !== undefined) {
+        for (let labelsList of Object.values(updatePost.label)) {
+          for (let label of labelsList) {
+            arrayLabel.push(label);
+          }
+        }
+        setLabelSelected(arrayLabel);
+      }
+
+      
+      const inputLabelList = document.querySelectorAll('.b-popup__label')
+      for (let inputLabel of inputLabelList) {
+        if (arrayLabel.includes(inputLabel.getAttribute('value'))) {
+          inputLabel.classList.add('b-popup__label-active')
+        }
+      }
+    }
+  }, [updatePost])
+
   return (
     <>
-      {type === 'create' ? (
+      {type === 'create' && (
         <div className="b-popup">
+          <FontAwesomeIcon icon={solid("circle-xmark")} className="b-popup__close" onClick={() => setType('')}/>
           <h3>Thêm bài đăng</h3>
           <label htmlFor="title">
             Tiêu đề<span style={{ color: 'red' }}>*</span>
           </label>
           <br />
           <input id="title" type="text" placeholder="Nhập tiêu đề..." onChange={e => setTitle(e.target.value)}/>
+          <br />
+          <label htmlFor="subHeader">
+            Tiêu đề phụ <span style={{ color: 'red' }}>*</span>
+          </label>
+          <br />
+          <input id="subHeader" type="text" placeholder="Nhập tiêu đề phụ..." onChange={e => setSubHeader(e.target.value)}/>
           <br />
           <label htmlFor="thumbnail">Thumbnail</label>
           <br />
@@ -181,18 +269,28 @@ function BlogPopup({ type }) {
             <Link to="/">Hủy</Link>
           </div>
         </div>
-      ) : (
+      )}
+      {type === 'update' && (
         <div className="b-popup">
+          <FontAwesomeIcon icon={solid("circle-xmark")} className="b-popup__close" onClick={() => setType('')}/>
           <h3>Cập nhật bài đăng</h3>
-          <label>
+          <label htmlFor="title">
             Tiêu đề<span style={{ color: 'red' }}>*</span>
           </label>
           <br />
-          <input type="text" placeholder="Nhập tiêu đề..." />
+          <input id="title" type="text" placeholder={updatePost.title} onChange={e => setTitle(e.target.value)}/>
           <br />
-          <label>Thumbnail</label>
+          <label htmlFor="subHeader">
+            Tiêu đề phụ <span style={{ color: 'red' }}>*</span>
+          </label>
           <br />
-          <input type="file" title="Thêm ảnh" />
+          <input id="subHeader" type="text" placeholder={updatePost.subHeader} onChange={e => setSubHeader(e.target.value)}/>
+          <br />
+          <label htmlFor="thumbnail">Thumbnail</label>
+          <br />
+          <input id="thumbnail" type="file" title="Thêm ảnh" onChange={(e) => setThumbnail(e.target.files[0])} />
+          <br />
+          <img style={{ maxWidth: '200px' }} src={updatePost.image} alt="img" />
           <br />
           <label>
             Chọn chủ đề<span style={{ color: 'red' }}>*</span>
@@ -200,31 +298,43 @@ function BlogPopup({ type }) {
           <br />
           <div className="b-popup__label-wrap">
             {labelList.map((label, index) => (
-              <div key={index} className="b-popup__label" value={label} onClick={(e) => handleClickLabel(e.target)}>
+              <div key={index} className="b-popup__label" value={label} onClick={(e) => {handleClickLabel(e)}}>
                 {label}
               </div>
             ))}
           </div>
+          <br />
+          <label htmlFor="link">Link bài viết</label>
+          <br />
+          <input id="link" type="text" placeholder={updatePost.linkPost} onChange={e => setLinkPost(e.target.value)}/>
+          <br />
           <label>Nội dung:</label>
           <br />
           <CKEditor
             editor={ClassicEditor}
-            // config = {
-            //   {
-            //     ckfinder: {
-            //       uploadUrl: 'http://localhost:5000/uploads'
-            //     }
-            //   }
-            // }
 
-            // onChange = {(event, editor) => {
-            //   const data = editor.getData();
-            //   setContent(data)
-            // }}
+            data={updatePost.content}
+            config = {
+              {
+                // plugins: [CKFinder],
+                ckfinder: {
+                  uploadUrl: 'http://localhost:5000/posts/uploads'
+                }
+              }
+            }
+
+            onChange = {async (event, editor) => {
+              const data = await editor.getData();
+              const dataHandled = handleCharacter(data);
+              console.log(dataHandled);
+              setContent(dataHandled)
+            }}
           />
           <p>Xem trước bài đăng</p>
           <div className="b-popup__button">
-            <button>Cập nhật</button>
+            <button type="button" onClick={handleUpdatePost}>
+              Cập nhật
+            </button>
             <Link to="/">Hủy</Link>
           </div>
         </div>

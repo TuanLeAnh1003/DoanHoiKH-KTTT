@@ -9,6 +9,7 @@
   padding: 52px 48px;
   top: 0;
   left: 0;
+  z-index: 999;
 }
 
 .b-popup > h3 {
@@ -111,4 +112,21 @@
   padding: 14px 32px;
   color: #fff;
   text-decoration: none;
+}
+
+
+.b-popup__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: 50px;
+  margin-right: 50px;
+  font-size: 30px;
+  color:gray;
+  width: fit-content;
+  cursor: pointer;
+}
+
+.b-popup__close:hover {
+  color:rgb(70, 70, 70);
 }

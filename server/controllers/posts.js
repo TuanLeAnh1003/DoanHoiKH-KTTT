@@ -11,7 +11,7 @@ import { bucket } from '../firebase/config.js'
 
 export const getPosts = async (req, res) => {
   try {
-    const posts = await PostModel.find().sort({updatedAt: 'desc'})
+    const posts = await PostModel.find().sort({createdAt: 'desc'})
 
     res.status(200).json(posts)
   } catch (error) {
@@ -35,11 +35,24 @@ export const createPost = async (req, res) => {
   try {
     const post = await PostModel.create({
       title: req.body.title,
+      subHeader: req.body.subHeader,
       image: req.body.image,
       label: req.body.label,
       content: req.body.content,
       linkPost: req.body.linkPost ? req.body.linkPost : '',
     })
+
+    res.status(200).json(post)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+export const updatePost = async (req, res) => {
+  try { 
+    const updatedPost = req.body;
+
+    const post = await PostModel.findOneAndUpdate({ _id: updatedPost.postId}, updatedPost, { new: true });
 
     res.status(200).json(post)
   } catch (err) {

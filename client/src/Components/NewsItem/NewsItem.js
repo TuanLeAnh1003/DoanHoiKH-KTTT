@@ -1,10 +1,27 @@
-import React, { memo } from 'react'
+import React, { memo, useState, useEffect } from 'react'
 import './NewsItem.css'
 import { Container, Row, Col } from 'react-bootstrap';
 import NewsItemOutstanding from './NewsItemOutstanding';
 import { Link } from 'react-router-dom'
 
 function NewsItem({ title, index, postsList }) {
+  const [arrayLabel, setArrayLabel] = useState([])
+
+  useEffect(() => {
+    let arrayTemp = []
+      if (postsList[0]) {
+        if (postsList[0].label !== undefined) {
+          for (let labelsList of Object.values(postsList[0].label)) {
+            for (let label of labelsList) {
+              arrayTemp.push(label);
+            }
+          }
+        }
+      }
+      setArrayLabel(arrayTemp)
+  }, [])
+
+
   let titleUrl = ''
   let labelLink = ''
   switch (title) {
@@ -27,8 +44,8 @@ function NewsItem({ title, index, postsList }) {
       break;
   }
 
-  switch (postsList[0].label[title][0]) {
-    case "Đoàn hội KH&KTTT":
+  switch (postsList[0]?.label[title][0]) {
+    case "Đoàn - Hội KH&KTTT":
       labelLink = "doan-hoi";
       break;
     case "Cơ cấu nhân sự":
@@ -88,7 +105,7 @@ function NewsItem({ title, index, postsList }) {
     default:
       break;
   }
-  
+
   return (
     <Container className="news-item" key={index}>
       <Row className="news-item__row1">{title}</Row>
@@ -105,7 +122,7 @@ function NewsItem({ title, index, postsList }) {
           </div>
           <div className="news-item-row2-wrapper">
             {
-              postsList[0].label[title]?.map((label, ind) => (
+              arrayLabel?.map((label, ind) => (
                 <div className="news-item-row2-label">
                   {label}
                 </div>

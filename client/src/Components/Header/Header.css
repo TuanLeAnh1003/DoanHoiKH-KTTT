@@ -146,6 +146,35 @@
   text-align: inherit;
   text-decoration: none;
   white-space: nowrap;
-  background-color: transparent;
+  /* background-color: transparent; */
   border: 0;
+}
+
+.nav-item.dropdown.show::after {
+  content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 46px;
+    width: 100%;
+    height: 10px;
+}
+
+.dropdown-menu.show {
+  background: rgba(212, 238, 247, 0.8);
+}
+
+.dropdown-menu.show > a {
+  color: #07719E;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.dropdown-menu.show > a:first-child {
+  font-weight: 500
+}
+
+.dropdown-menu.show > a:hover {
+  background: rgba(7, 113, 158, 0.15)
 }

@@ -72,7 +72,18 @@
   }
 
   .tabcontent {
-    margin: 5% 18%;
+    width: 100%;
+  }
+
+  .tabcontent > .mb-3.nav.nav-tabs.nav-fill {
+    max-width: 1020px;
+    margin: 10px auto !important;
+  }
+
+  .tabcontent > ul > li {
+    /* max-width: 160px; */
+    display: flex;
+    align-items: center;
   }
 
   .tab-list {
@@ -323,7 +334,6 @@
 
 .News_Item_Title {
   font-weight: bold;
-  float: left;
   margin-left: 5%;
 }
 
@@ -338,4 +348,10 @@
 .News_Item_Description {
   text-align: justify;
   margin-left: 5%;
+}
+
+.News_Image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain
 }

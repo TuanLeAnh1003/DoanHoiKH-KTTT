@@ -1,0 +1,37 @@
+.BlogItem {
+  margin-bottom: 50px;
+  text-align: center;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.BlogItem__col2 {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.BlogItem__col2 > img {
+  max-width: 100px;
+  margin-right: 30px
+}
+
+.BlogItem__col3 {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.BlogItem__col4 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.BlogItem__col4 > p {
+  margin-bottom: 0;
+  margin-left: 10px;
+}

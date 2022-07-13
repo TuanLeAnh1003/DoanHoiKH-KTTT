@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import './Activities.css'
 import "bootstrap/dist/css/bootstrap.css";
 import ViewMore from '../../../Components/ViewMore/ViewMore';
-import Tabs from "../../../Components/Tabs/Tabs";
+// import Tabs from "../../../Components/Tabs/Tabs";
 import Thumbnail from '../../../Assets/Images/thumbnail.png';
-import NewsImage2 from '../../../Assets/Images/Image2.png';
-import NewsImage1 from '../../../Assets/Images/Image1.png';
-import NewsImage3 from '../../../Assets/Images/Image3.png';
 import PostApi from '../../../Apis/PostApi'
 import { useNavigate, Link } from 'react-router-dom';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import TabItem from './../../../Components/TabItem/index';
 
 function Activities({ title }) {
   const [postsList, setPostsList] = useState()
@@ -124,6 +124,27 @@ function Activities({ title }) {
     navigate(`./${labelLink}/${postsList[0]?._id}`, { replace: true })
   }
 
+  const handleClickTabItem = (label) => {
+    switch (label) {
+      case 'Tất cả':
+        PostApi.getPostsByTitle({
+          title: title,
+        }).then((res) => {
+          setPostsList(res);
+        });
+        break;
+      case label:
+        PostApi.getPostsByLabel({
+          label: label,
+        }).then((res) => {
+          setPostsList(res);
+        });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div>
       <div className='cover'>
@@ -148,7 +169,7 @@ function Activities({ title }) {
 
       <ViewMore title='Website Đoàn - Hội ISE có gì?' subTitle='Khám phá' />
 
-      <div className='tabcontent'>
+      {/* <div className='tabcontent'>
         <Tabs title={title} setPostsList={setPostsList} postsList={postsList}>
           <div label='Tất cả'>
             <div className='livenews' style={{ backgroundImage: postsList &&  `url('${postsList[0]?.image}')`}}>
@@ -163,7 +184,7 @@ function Activities({ title }) {
                   <div className='col-md-6'>
                     <div className='layoutright'>
                       <p>
-                      {postsList && postsList[0]?.title}
+                      {postsList && postsList[0]?.subHeader}
                       </p>
                       <a onClick={() => handleClickViewMore(postsList[0]?.label[title][0])}>Xem thêm </a>
                     </div>
@@ -186,7 +207,7 @@ function Activities({ title }) {
                   <div className='col-md-6'>
                     <div className='layoutright'>
                       <p>
-                        {arrayOfPostsByLabel[0]?.content}
+                        {arrayOfPostsByLabel[0]?.subHeader}
                       </p>
                       <a onClick={() => navigate(`./${postsList[0]._id}`, { replace: true })}>Xem thêm </a>
                     </div>
@@ -208,7 +229,7 @@ function Activities({ title }) {
                   <div className='col-md-6'>
                     <div className='layoutright'>
                       <p>
-                        {arrayOfPostsByLabel[1]?.content}
+                        {arrayOfPostsByLabel[1]?.subHeader}
                       </p>
                       <a href='#'>Xem thêm </a>
                     </div>
@@ -232,7 +253,7 @@ function Activities({ title }) {
                       <div className='col-md-6'>
                         <div className='layoutright'>
                           <p>
-                            {arrayOfPostsByLabel[2]?.content}
+                            {arrayOfPostsByLabel[2]?.subHeader}
                           </p>
                           <a href='#'>Xem thêm </a>
                         </div>
@@ -261,7 +282,7 @@ function Activities({ title }) {
                       <div className='col-md-6'>
                         <div className='layoutright'>
                           <p>
-                            {arrayOfPostsByLabel[3]?.content}
+                            {arrayOfPostsByLabel[3]?.subHeader}
                           </p>
                           <a href='#'>Xem thêm </a>
                         </div>
@@ -274,7 +295,7 @@ function Activities({ title }) {
               )
             }
           </div>
-          {/* <div label={labelList[4]}>
+          <div label={labelList[4]}>
             <div className='livenews' style={{ backgroundImage: `url('${postsList[0]?.image}')`}}>
               <div className='container'>
                 <div className='row'>
@@ -295,8 +316,29 @@ function Activities({ title }) {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
         </Tabs>
+      </div> */}
+
+      <div className="tabcontent">
+      <Tabs
+        defaultActiveKey="Tất cả"
+        id="fill-tab-example"
+        className="mb-3"
+        fill
+        onClick={e => handleClickTabItem(e.target.getAttribute('data-rr-ui-event-key') )}
+      >
+        <Tab eventKey="Tất cả" title="Tất cả">
+          <TabItem label="Tất cả" post={postsList ? postsList[0] : {}} title={title}/>
+        </Tab>
+        {
+          labelList?.map((label, index) => (
+            <Tab key={index} eventKey={label} title={label}>
+              <TabItem label={label}  post={postsList ? postsList[0] : {}} title={title}/>
+            </Tab>
+          ))
+        }
+      </Tabs>
       </div>
 
       <div className='listnew'>
@@ -346,10 +388,10 @@ function Activities({ title }) {
                           <p className='News_Item_Time'>{new Date(post.createdAt).toLocaleDateString('pt-PT')}</p>
                           <p className='News_Item_Description'>
                             {
-                              post.content.length > 10 ? (
-                                `${post.content.substring(0, 10)}...`
+                              post.subHeader.length > 20 ? (
+                                `${post.subHeader.substring(0, 20)}...`
                               ) : (
-                                post.content
+                                post.subHeader
                               )
                             }
                           </p>

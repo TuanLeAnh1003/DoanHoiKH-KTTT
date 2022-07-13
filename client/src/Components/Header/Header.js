@@ -45,6 +45,16 @@ function Header({currentUser, setCurrentUser}) {
     console.log(inputSearch);
   }
 
+  const handleMouseLeaveNav = () => {
+    // const data = document.querySelector('.nav-item.dropdown.show')
+
+    // data.classList.remove('show')
+
+    // data.children[0].setAttribute('aria-expanded', 'false')
+    // data.children[1].classList.remove('show')
+
+  }
+
   return (
     <div className="header">
       <Container className="header__top">
@@ -62,7 +72,7 @@ function Header({currentUser, setCurrentUser}) {
                 <h4>{currentUser?.name}</h4>
                 {
                   currentUser?.image ? (
-                    <img src={currentUser?.image} alt="img" />
+                    <img src={currentUser?.image} alt="img" style={{ maxHeight: '50px' }}/>
                   ) : (<></>)
                 }
                 <button type="button" onClick={handleLogout}>Đăng xuất</button>
@@ -79,7 +89,7 @@ function Header({currentUser, setCurrentUser}) {
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
             <Nav className='me-auto'>
-              <NavDropdown title='GIỚI THIỆU' id='collasible-nav-dropdown'>
+              <NavDropdown title='GIỚI THIỆU' id='collasible-nav-dropdown' onMouseLeave={() => {handleMouseLeaveNav()}}>
                 <Link className="header__link" to='gioi-thieu'>GIỚI THIỆU</Link>
                 <NavDropdown.Divider />
                 <Link className="header__link" to='gioi-thieu/doan-hoi'>Đoàn - Hội KH&KTTT</Link>
@@ -87,7 +97,7 @@ function Header({currentUser, setCurrentUser}) {
                 <Link className="header__link" to='gioi-thieu/lien-he'>Thông tin liên hệ</Link>
                 <Link className="header__link" to='gioi-thieu/danh-hieu'>Danh hiệu SV5T - TNTT</Link>
               </NavDropdown>
-              <NavDropdown title='HOẠT ĐỘNG' id='collasible-nav-dropdown'>
+              <NavDropdown title='HOẠT ĐỘNG' id='collasible-nav-dropdown' onMouseLeave={() => {handleMouseLeaveNav()}}>
                 <Link className="header__link" to='hoat-dong'>HOẠT ĐỘNG</Link>
                 <NavDropdown.Divider />
                 <Link className="header__link" to='hoat-dong/ban-tin'>Bản tin Đoàn - Hội</Link>
@@ -96,7 +106,7 @@ function Header({currentUser, setCurrentUser}) {
                 <Link className="header__link" to='hoat-dong/cac-cuoc-thi'>Các cuộc thi của Đoàn Thanh niên</Link>
                 <Link className="header__link" to='hoat-dong/tai-uit'>Hoạt động tại UIT</Link>
               </NavDropdown>
-              <NavDropdown title='TIN TỨC' id='collasible-nav-dropdown'>
+              <NavDropdown title='TIN TỨC' id='collasible-nav-dropdown' onMouseLeave={() => {handleMouseLeaveNav()}}>
                 <Link className="header__link" to='tin-tuc'>TIN TỨC</Link>
                 <NavDropdown.Divider />
                 <Link className="header__link" to='tin-tuc/thong-bao'>Thông báo</Link>
@@ -104,7 +114,7 @@ function Header({currentUser, setCurrentUser}) {
                 <Link className="header__link" to='tin-tuc/sinh-vien-tieu-bieu'>Sinh viên tiêu biểu</Link>
                 <Link className="header__link" to='tin-tuc/cau-chuyen-dep'>Những câu chuyện đẹp tại ISE</Link>
               </NavDropdown>
-              <NavDropdown title='HỖ TRỢ' id='collasible-nav-dropdown'>
+              <NavDropdown title='HỖ TRỢ' id='collasible-nav-dropdown' onMouseLeave={() => {handleMouseLeaveNav()}}>
                 <Link className="header__link" to='ho-tro'>HỖ TRỢ</Link>
                 <NavDropdown.Divider />
                 <Link className="header__link" to='ho-tro/quy-trinh'>Quy trình - văn bản</Link>
@@ -112,7 +122,7 @@ function Header({currentUser, setCurrentUser}) {
                 <Link className="header__link" to='ho-tro/viec-lam'>Việc làm - Thực tập</Link>
                 <Link className="header__link" to='ho-tro/khac'>Khác</Link>
               </NavDropdown>
-              <NavDropdown title='HỌC TẬP' id='collasible-nav-dropdown'>
+              <NavDropdown title='HỌC TẬP' id='collasible-nav-dropdown' onMouseLeave={() => {handleMouseLeaveNav()}}>
                 <Link className="header__link" to='hoc-tap'>HỌC TẬP</Link>
                 <NavDropdown.Divider />
                 <Link className="header__link" to='hoc-tap/cuoc-thi'>Cuộc thi học thuật</Link>

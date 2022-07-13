@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPosts, getPostById, createPost, getPostsByTitle, getPostsByLabel, getEnoughPostsByTitle, uploadImageToFirebase, uploadImages} from '../controllers/posts.js'
+import { getPosts, getPostById, createPost, updatePost, getPostsByTitle, getPostsByLabel, getEnoughPostsByTitle, uploadImageToFirebase, uploadImages} from '../controllers/posts.js'
 import multer from 'multer'
 import multiparty from 'connect-multiparty'
 
@@ -18,6 +18,8 @@ router.get('/', getPosts);
 router.get('/:postId', getPostById);
 
 router.post('/', createPost)
+
+router.put('/', updatePost)
 
 router.post('/getPostsByTitle', getPostsByTitle)
 

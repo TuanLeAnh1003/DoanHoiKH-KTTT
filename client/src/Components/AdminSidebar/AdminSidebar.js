@@ -27,7 +27,7 @@ function AdminSidebar({ currentUser }) {
         {
           AdminFunc.map((func, index) => (
             <>
-              <Link to={AdminLink[index]} className={index === funcActive ? 'AdminSideBar__func-active' : ''} onClick={() => setFuncActive(index)}>{func}</Link>
+              <Link key={index} to={AdminLink[index]} className={index === funcActive ? 'AdminSideBar__func-active' : ''} onClick={() => setFuncActive(index)}>{func}</Link>
               <br />
             </>
           ))

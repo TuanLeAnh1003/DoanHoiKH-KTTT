@@ -37,7 +37,6 @@
 .Blog__Content__Header {
     position: relative;
     width: 790px;
-    height: 217px;
 }
 
 .Blog__Label {
@@ -45,9 +44,6 @@
     width: fit-content;
     height: 24px;
     padding: 2px 16px;
-    background: #88D6A3;
-    border-radius: 100px;
-    margin-left: 40px;
 }
 
 .Blog__Label__Name {
@@ -58,12 +54,12 @@
     font-size: 14px;
     line-height: 19px;
     text-align: center;
-    letter-spacing: -0.0008em;
     text-transform: uppercase;
     color: #FFFFFF;
-    flex: none;
-    order: 0;
-    flex-grow: 0;
+    background: #88D6A3;
+    border-radius: 100px;
+    padding: 2px 16px;
+    margin-right: 40px;
 }
 
 .Blog__Title {
@@ -324,7 +320,6 @@
     padding: 0px;
     gap: 30px;
     width: 840px;
-    height: 394px;
     background: rgba(230, 243, 248, 0.15);
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
 }
@@ -622,4 +617,8 @@
     line-height: 14px;
     text-align: center;
     color: #495057;
+}
+
+.Blog__Paragraph1.Blog__Content__Text > figure > img {
+    width: 100%;
 }

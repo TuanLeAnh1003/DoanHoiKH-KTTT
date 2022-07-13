@@ -5,6 +5,9 @@ const schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  subHeader: {
+    type: String
+  },
   image: {
     type: String,
     required: true

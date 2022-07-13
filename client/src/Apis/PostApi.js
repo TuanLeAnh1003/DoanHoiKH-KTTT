@@ -33,6 +33,10 @@ const createPost = async (data) => {
   return await axiosInstance.post('/posts', data)
 }
 
+const updatePost = async (data) => {
+  return await axiosInstance.put('/posts', data)
+}
+
 export default {
   getAllPosts,
   getPostById,
@@ -40,5 +44,6 @@ export default {
   getEnoughPostsByTitle,
   getPostsByLabel,
   uploadImageToFirebase,
-  createPost
+  createPost,
+  updatePost
 }

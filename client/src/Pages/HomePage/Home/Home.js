@@ -93,14 +93,14 @@ function Home() {
         </Carousel.Item>
       </Carousel>
       
-      <FacebookProvider appId={process.env.REACT_APP_FACEBOOK_APP_ID}>
+      {/* <FacebookProvider appId={process.env.REACT_APP_FACEBOOK_APP_ID}>
         <Share href="https://www.facebook.com/UIT.ISE/posts/2148508611981543">
           {({ handleClick, loading }) => (
             <button type="button" disabled={loading} onClick={handleClick}>Share</button>
           )}
         </Share>
         <Comments href="https://www.facebook.com/UIT.ISE/posts/2148508611981543" />
-        {/* <EmbeddedPost href="https://www.facebook.com/UIT.ISE/posts/2148508611981543" width="500" /> */}
+        <EmbeddedPost href="https://www.facebook.com/UIT.ISE/posts/2148508611981543" width="500" />
         <Feed link="https://www.facebook.com/UIT.ISE/posts/2148508611981543">
           {({ handleClick }) => (
             <button type="button" onClick={handleClick}>Share on Feed</button>
@@ -113,9 +113,7 @@ function Home() {
           showMetaData={true}
           skin="light"
         />
-      </FacebookProvider>
-
-      
+      </FacebookProvider> */}
 
       <Container>
         <Row className="home__container-row1">
@@ -145,6 +143,14 @@ function Home() {
         titleList.map((item, index) => {
           const list = []
 
+          // for (let post of postsList) {
+          //   if (post.label) {
+          //     if (post?.label[item.title] !== undefined) {
+          //       list.push(post)
+          //     }
+          //   }
+          // }
+
           postsList?.map((post, ind) => {
             if (post.label) {
               if (post?.label[item.title] !== undefined) {
@@ -154,7 +160,7 @@ function Home() {
           })
           
           return (
-            postsList && 
+            list && 
             <NewsItem
               key={index}
               title={item.title}
@@ -164,9 +170,11 @@ function Home() {
         })
       }
 
-      <video width="80%" controls >
-        <source src={VideoDoanHoi} type="video/mp4" />
-      </video>
+      <div style={{ margin: '20px auto', width: 'fit-content'}}>
+        <video width="100%" controls >
+          <source src={VideoDoanHoi} type="video/mp4" />
+        </video>
+      </div>
     </div>
   );
 }

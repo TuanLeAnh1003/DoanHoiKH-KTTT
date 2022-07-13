@@ -1,0 +1,70 @@
+.TabItem {
+  background-repeat: no-repeat;
+  height: 500px;
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.TabItem__Col1 {
+  padding-left: 10%;
+  padding-top: 18%;
+}
+
+.TabItem__Col1--labelList {
+  display: flex;
+  align-items: center;
+  justify-items: left;
+  padding-left: 0;
+  text-decoration: none;
+  list-style: none;
+}
+
+.TabItem__Col1--labelList > li {
+  background: #D8EDDC;
+  border-radius: 100px;
+  padding: 5px 20px;
+  margin-right: 5px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #39B090;
+}
+
+.TabItem__Col1 > h1 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 60px;
+  color: #fff;
+}
+
+.TabItem__Col2 {
+  background: rgba(0, 0, 0, 0.5);
+  padding-top: 2%;
+  padding-left: 3%;
+  color: #fff;
+}
+
+.TabItem__Col2 > a {
+  float: right;
+  margin-right: 5%;
+  display: flex;
+  align-items: center;
+  color: #FA9579 !important;
+}
+
+.TabItem__Col2 > a:hover {
+  text-decoration: underline !important;
+  color: #f76942 !important;
+  cursor: pointer;
+}
+
+.TabItem__Col2 > a > p {
+  margin-bottom: 0;
+  margin-right: 5px;
+}
+
+.TabItem__Col2 > a > svg {
+  height: 20px;
+}
