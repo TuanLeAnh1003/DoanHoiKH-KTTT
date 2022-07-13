@@ -10,6 +10,7 @@ import Blog from '../Blog/Blog';
 import Login from '../Login/Login';
 import { useSelector } from 'react-redux'
 import NotFound from '../NotFound/NotFound';
+import Search from '../Search/Search';
 
 function HomePage({ currentUser, setCurrentUser }) {
   return (
@@ -35,6 +36,7 @@ function HomePage({ currentUser, setCurrentUser }) {
           <Route path="/tin-tuc/:lab/:postId" element={<Blog title="Tin tức" />}/>
           <Route path="/ho-tro/:lab/:postId" element={<Blog title="Hỗ trợ" />}/>
           <Route path="/hoc-tap/:lab/:postId" element={<Blog title="Học tập" />}/>
+          <Route path='/search' element={<Search  title="Search" />}></Route>
           <Route path="/login" element={<Login />}/>
           <Route path="/*" element={<NotFound />}/>
         </Routes>

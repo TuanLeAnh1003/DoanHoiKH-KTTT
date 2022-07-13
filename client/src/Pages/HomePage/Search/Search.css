@@ -1,0 +1,100 @@
+/* Search bar */
+.Search__search {
+    display: flex;
+    height: 70px;
+    width: 840px;
+    margin-top: 64px;
+    border: 2px solid #319CC4;
+    padding: 21px 16px 21px 25px;
+    border-radius: 40px;
+    align-items: center;
+    margin-left: 12px;
+}
+
+.Search__search-input-wrap {
+    width: 100%;
+    text-align: left;
+}
+
+.Search__search-input {
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 20px;
+}
+
+.Search__search-input::placeholder {
+    color: #D9D9D9;
+}
+
+.Search__search-btn {
+    padding: 10px 26px;
+    background-color: #329CC3;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Search__search-btn:hover {
+    cursor: pointer;
+}
+
+.Search__search-btn-icon {
+    color: #fff;
+    font-size: 24px;
+}
+
+.Search__quantity {
+    color: #8D9298;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    margin: 37px calc(1.5% + 16px);
+}
+
+/* Pagination */
+.Search__pagination {
+    width: 220px;
+    height: 30px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-around;
+    margin-bottom: 112px;
+    align-items: center;
+}
+
+.Search__btn {
+    border: none;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+
+.Search__btn-direction {
+    font-size: 16px;
+    color: #7DCBE6;
+}
+
+.Search__pagination-left {
+
+}
+
+.Search__pagination-page {
+    color: #252525;
+}
+
+.Search__pagination-page--active {
+    background-color: #7DCBE6;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.Search__pagination-right {
+
+}

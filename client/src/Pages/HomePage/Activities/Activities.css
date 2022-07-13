@@ -320,7 +320,7 @@
   margin-top: 10%;
   margin-left: 1.5%;
   width: 773px;
-  height: 200px;
+  min-height: 200px;
 }
 
 .List_News .container {
