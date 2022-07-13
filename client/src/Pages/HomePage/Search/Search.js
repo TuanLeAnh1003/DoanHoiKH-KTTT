@@ -4,6 +4,7 @@ import Thumbnail from '../../../Assets/Images/thumbnail.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid, regular, brands} from '@fortawesome/fontawesome-svg-core/import.macro';
 import  "./Search.css"
+import parser from 'html-react-parser'
 
 function Search() {
   const [postsList, setPostsList] = useState()
@@ -49,10 +50,10 @@ function Search() {
                             <p className='News_Item_Time'>{new Date(post.createdAt).toLocaleDateString('pt-PT')}</p>
                             <p className='News_Item_Description'>
                               {
-                                post.content.length > 10 ? (
-                                  `${post.content.substring(0, 10)}...`
+                                post.subHeader.length > 10 ? (
+                                  `${parser(post.subHeader).substring(0, 10)}...`
                                 ) : (
-                                  post.content
+                                  parser(post.subHeader)
                                 )
                               }
                             </p>

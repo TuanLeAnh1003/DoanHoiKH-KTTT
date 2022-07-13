@@ -19,7 +19,7 @@ function NewsItem({ title, index, postsList }) {
         }
       }
       setArrayLabel(arrayTemp)
-  }, [])
+  }, [postsList[0]])
 
 
   let titleUrl = ''
