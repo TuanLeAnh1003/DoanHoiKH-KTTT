@@ -12,7 +12,7 @@ function AccountManagement() {
     <>
       <div className="AccManage__header">
         <div className='AccManage__header-heading'>Tài khoản</div>
-        <div className='AccManage__header-edit' onClick={() => {setShowUserName(true); setShowPassword(true); setShowEmail(true) }} >Chỉnh sửa</div>
+        <div className='AccManage__header-edit' onClick={() => {setShowUserName(!showUserName); setShowPassword(!showPassword); setShowEmail(!showEmail) }} >Chỉnh sửa</div>
       </div>
       <div className='AccManage__container'>
         <div className="AccManage__container-form">
@@ -20,7 +20,7 @@ function AccountManagement() {
             <div className='AccManage__container-form-user-label'>Tên đăng nhập</div>
             <input type="text" className='AccManage__container-form-input'  placeholder='admin.ise'/> 
             <div className='AccManage__container-form-edit'>    
-              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowUserName(true)}}/>
+              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowUserName(!showUserName)}}/>
             </div>
           </div>
 
@@ -67,7 +67,7 @@ function AccountManagement() {
             <div className='AccManage__container-form-user-label'>Mật khẩu</div>
             <input type="password" className='AccManage__container-form-input' placeholder='***************'/> 
             <div className='AccManage__container-form-edit'>    
-              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowPassword(true)}} />
+              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowPassword(!showPassword)}} />
             </div>
           </div>
 
@@ -114,7 +114,7 @@ function AccountManagement() {
             <div className='AccManage__container-form-user-label'>Email</div>
             <input type="email" className='AccManage__container-form-input' placeholder='bch.khkttt.uit@gmail.com'/>
             <div className='AccManage__container-form-edit'>    
-              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowEmail(true)}}/>
+              <FontAwesomeIcon className='AccManage__container-form-edit-icon' icon={solid('edit')} onClick={() => {setShowEmail(!showEmail)}}/>
             </div>
           </div>
 
