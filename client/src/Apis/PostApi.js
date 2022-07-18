@@ -1,7 +1,11 @@
 import axiosInstance from "./axiosInstance";
 
-const getAllPosts = async () => {
+const getAllPosts = async (data) => {
   return await axiosInstance.get('/posts');
+}
+
+const getPostsSearch = async (data) => {
+  return await axiosInstance.post(`/posts/search`, data);
 }
 
 const getPostById = async (data) => {
@@ -39,6 +43,7 @@ const updatePost = async (data) => {
 
 export default {
   getAllPosts,
+  getPostsSearch,
   getPostById,
   getPostsByTitle,
   getEnoughPostsByTitle,

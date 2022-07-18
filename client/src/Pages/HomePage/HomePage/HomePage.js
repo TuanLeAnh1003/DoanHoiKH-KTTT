@@ -13,9 +13,11 @@ import NotFound from '../NotFound/NotFound';
 import Search from '../Search/Search';
 
 function HomePage({ currentUser, setCurrentUser }) {
+  const [inputSearch, setInputSearch] = useState()
+
   return (
     <div>
-      <Header currentUser={currentUser} setCurrentUser={setCurrentUser}/>
+      <Header currentUser={currentUser} setCurrentUser={setCurrentUser} setInputSearch={setInputSearch}/>
       <div style={{minHeight: '320px'}}>
         <Routes>
           <Route path="/" element={<Home />}/>
@@ -36,7 +38,7 @@ function HomePage({ currentUser, setCurrentUser }) {
           <Route path="/tin-tuc/:lab/:postId" element={<Blog title="Tin tức" />}/>
           <Route path="/ho-tro/:lab/:postId" element={<Blog title="Hỗ trợ" />}/>
           <Route path="/hoc-tap/:lab/:postId" element={<Blog title="Học tập" />}/>
-          <Route path='/search' element={<Search  title="Search" />}></Route>
+          <Route path='/search' element={<Search  inputSearch={inputSearch} setInputSearch={setInputSearch} />}></Route>
           <Route path="/login" element={<Login />}/>
           <Route path="/*" element={<NotFound />}/>
         </Routes>

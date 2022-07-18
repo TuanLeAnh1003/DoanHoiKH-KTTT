@@ -16,11 +16,11 @@ import { solid } from '@fortawesome/fontawesome-svg-core/import.macro'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import firebase, { auth } from '../../firebase/config'
 import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-function Header({currentUser, setCurrentUser}) {
+function Header({currentUser, setCurrentUser, setInputSearch }) {
   const [clickSearch, setClickSearch] = useState(false)
-  const [inputSearch, setInputSearch] = useState()
+  const [input, setInput] = useState()
 
   const navigate = useNavigate()
 
@@ -39,10 +39,6 @@ function Header({currentUser, setCurrentUser}) {
       console.log("Logout success");
     })
     setCurrentUser({})
-  }
-
-  const handleClickSearch = () => {
-    console.log(inputSearch);
   }
 
   const handleMouseLeaveNav = () => {
@@ -136,8 +132,10 @@ function Header({currentUser, setCurrentUser}) {
                   <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={() => setClickSearch(true)} />
                 ) : (
                   <div className="header__navbar-search-wrap">
-                    <input type="text" onChange={e => setInputSearch(e.target.value)}/>
-                    <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={handleClickSearch} />
+                    <input type="text" onChange={e => setInput(e.target.value)}/>
+                    <Link to='/search'>
+                      <FontAwesomeIcon className="header__navbar-search" icon={solid("search")} onClick={() => setInputSearch(input)}/>
+                    </Link>
                   </div>
                 )
               }
